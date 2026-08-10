@@ -2,667 +2,76 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<title>Vocabulario</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0A0D16">
+<title>Vocabulario · Smart Review</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Rajdhani:wght@500;600;700&family=IBM+Plex+Mono:wght@500&display=swap');
-
-  :root{
-    --bg:#0A0D16;
-    --bg2:#111726;
-    --panel:#141B2C;
-    --line:#232C42;
-    --cyan:#3DF2FF;
-    --magenta:#FF3DBE;
-    --green:#39FF88;
-    --green-dim:#1E4A34;
-    --red:#FF3B4E;
-    --red-dim:#4A1E26;
-    --text:#E7ECFB;
-    --muted:#6E7A99;
-  }
-  *{box-sizing:border-box;}
-  body{
-    margin:0;
-    background:
-      radial-gradient(circle at 15% 0%, rgba(61,242,255,.08), transparent 45%),
-      radial-gradient(circle at 85% 15%, rgba(255,61,190,.08), transparent 45%),
-      var(--bg);
-    font-family:'Rajdhani',sans-serif;
-    color:var(--text);
-    display:flex;
-    justify-content:center;
-    padding:32px 16px 60px;
-  }
-  .app{width:100%;max-width:480px;}
-  .sync-warning{
-    display:none;
-    background:var(--red-dim);border:1px solid var(--red);color:var(--red);
-    font-size:12px;font-family:'IBM Plex Mono',monospace;line-height:1.5;
-    padding:10px 12px;border-radius:8px;margin-bottom:16px;
-  }
-  .layout{display:block;}
-  .study{margin-bottom:4px;}
-  .side{display:flex;flex-direction:column;gap:4px;}
-
-  @media (max-width:400px){
-    body{padding:20px 12px 48px;}
-    .topbar h1{font-size:19px;}
-    .stage{height:230px;}
-    .word{font-size:21px;}
-    .btn{font-size:13px;padding:12px 8px;}
-  }
-
-  @media (min-width:820px){
-    body{padding:56px 24px 80px;align-items:flex-start;}
-    .app{max-width:920px;}
-    .topbar h1{font-size:28px;}
-    .layout{
-      display:grid;
-      grid-template-columns:380px 1fr;
-      gap:32px;
-      align-items:start;
-    }
-    .stage{height:340px;}
-    .word{font-size:32px;}
-    .face{padding:32px;}
-    .side{gap:20px;}
-    .panel-box{
-      border-top:none;padding-top:0;
-      background:var(--panel);border:1px solid var(--line);
-      border-radius:12px;padding:18px 20px;
-    }
-    .panel-box[open] summary{margin-bottom:16px;}
-    .list{max-height:400px;}
-  }
-
-  .topbar{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:18px;}
-  .topbar h1{
-    font-family:'Orbitron',sans-serif;font-weight:800;font-size:22px;margin:0;
-    letter-spacing:1px;color:var(--cyan);
-    text-shadow:0 0 14px rgba(61,242,255,.5);
-  }
-  .topbar .count{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted);}
-
-  .progress-track{height:5px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:26px;}
-  .progress-fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--magenta));transition:width .35s ease;}
-
-  .stage{position:relative;height:280px;margin-bottom:20px;}
-  .stack-shadow{
-    position:absolute;inset:0;
-    background:var(--bg2);
-    border-radius:14px;
-    border:1px solid var(--line);
-    transform:translateY(10px) scale(0.96);
-  }
-  .stack-shadow.s2{transform:translateY(18px) scale(0.92);opacity:.6;}
-
-  .card{
-    position:absolute;inset:0;
-    cursor:pointer;
-    perspective:1200px;
-  }
-  .card-inner{
-    position:relative;width:100%;height:100%;
-    transform-style:preserve-3d;
-    transition:transform .45s cubic-bezier(.2,.8,.2,1);
-  }
-  .card.flipped .card-inner{transform:rotateY(180deg);}
-
-  .face{
-    position:absolute;inset:0;
-    backface-visibility:hidden;
-    border-radius:14px;
-    background:var(--panel);
-    border:1px solid var(--cyan);
-    box-shadow:0 0 22px rgba(61,242,255,.18), inset 0 0 30px rgba(61,242,255,.04);
-    display:flex;flex-direction:column;
-    align-items:center;justify-content:center;
-    padding:20px;
-  }
-  .face-back{
-    transform:rotateY(180deg);
-    border-color:var(--magenta);
-    box-shadow:0 0 22px rgba(255,61,190,.18), inset 0 0 30px rgba(255,61,190,.04);
-  }
-
-  .eyebrow{
-    font-family:'IBM Plex Mono',monospace;
-    font-size:11px;letter-spacing:.14em;text-transform:uppercase;
-    color:var(--cyan);margin-bottom:14px;
-  }
-  .face-back .eyebrow{color:var(--magenta);}
-  .word{
-    font-family:'Orbitron',sans-serif;font-weight:600;font-size:26px;
-    color:var(--text);text-align:center;line-height:1.25;
-  }
-  .hint{
-    margin-top:14px;font-size:12px;color:var(--muted);
-    font-family:'IBM Plex Mono',monospace;
-  }
-
-  .actions{display:flex;gap:10px;margin-bottom:26px;}
-  .btn{
-    flex:1;padding:13px 10px;border-radius:8px;border:1px solid var(--line);
-    background:var(--panel);color:var(--text);font-size:15px;font-weight:600;
-    cursor:pointer;font-family:'Rajdhani',sans-serif;letter-spacing:.03em;
-    display:flex;align-items:center;justify-content:center;gap:6px;
-    text-transform:uppercase;
-  }
-  .btn:active{transform:scale(0.98);}
-  .btn.review{color:var(--red);border-color:var(--red);box-shadow:0 0 14px rgba(255,59,78,.15);}
-  .btn.known{color:var(--green);border-color:var(--green);box-shadow:0 0 14px rgba(57,255,136,.15);}
-  .btn.ghost{flex:none;padding:13px 14px;color:var(--muted);text-transform:none;font-weight:500;}
-
-  .row{display:flex;gap:10px;margin-bottom:10px;}
-
-  .panel-box{
-    margin-top:8px;border-top:1px solid var(--line);padding-top:16px;
-  }
-  .panel-box summary{
-    cursor:pointer;font-size:13px;color:var(--muted);
-    list-style:none;display:flex;align-items:center;gap:6px;
-    text-transform:uppercase;letter-spacing:.05em;font-family:'IBM Plex Mono',monospace;
-  }
-  .panel-box summary::-webkit-details-marker{display:none;}
-  .panel-box[open] summary{margin-bottom:14px;color:var(--cyan);}
-
-  .form-row{display:flex;gap:8px;margin-bottom:8px;}
-  input[type=text]{
-    flex:1;padding:10px 12px;border-radius:8px;border:1px solid var(--line);
-    background:var(--bg2);color:var(--text);font-size:14px;font-family:'Rajdhani',sans-serif;
-  }
-  input[type=text]::placeholder{color:var(--muted);}
-  input[type=text]:focus{outline:none;border-color:var(--cyan);}
-  .add-btn{
-    padding:10px 16px;border-radius:8px;border:1px solid var(--cyan);
-    background:var(--bg2);color:var(--cyan);font-size:14px;cursor:pointer;
-    font-family:'Rajdhani',sans-serif;font-weight:600;
-  }
-
-  .list{max-height:280px;overflow-y:auto;}
-  .list-item{
-    display:flex;justify-content:space-between;align-items:center;
-    padding:9px 4px;border-bottom:1px solid var(--line);font-size:13px;gap:10px;
-  }
-  .li-words{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-  .list-item .li-en{font-weight:600;}
-  .li-rounds{color:var(--cyan);font-family:'IBM Plex Mono',monospace;font-size:11px;}
-  .list-item .li-es{color:var(--muted);margin-left:6px;}
-  .li-right{display:flex;align-items:center;gap:10px;flex:none;}
-  .dots{display:flex;gap:3px;}
-  .dot{width:8px;height:8px;border-radius:50%;background:var(--line);}
-  .dot.g{background:var(--green);box-shadow:0 0 5px rgba(57,255,136,.7);}
-  .dot.r{background:var(--red);box-shadow:0 0 5px rgba(255,59,78,.7);}
-  .li-del{
-    background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px;
-    padding:2px 4px;
-  }
-  .empty-msg{font-size:13px;color:var(--muted);text-align:center;padding:30px 0;}
-
-  .stat-group{margin-bottom:16px;}
-  .stat-title{
-    font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;
-    text-transform:uppercase;margin-bottom:8px;
-  }
-  .stat-title.needs{color:var(--red);}
-  .stat-title.good{color:var(--green);}
-  .stat-row{
-    display:flex;justify-content:space-between;font-size:13px;
-    padding:6px 0;border-bottom:1px solid var(--line);
-  }
-  .stat-row .es{color:var(--muted);}
-
-  .accuracy-pill{
-    display:flex;align-items:baseline;gap:10px;
-    background:var(--bg2);border:1px solid var(--line);border-radius:10px;
-    padding:12px 14px;margin-bottom:16px;
-  }
-  .acc-num{
-    font-family:'Orbitron',sans-serif;font-weight:800;font-size:22px;
-    color:var(--cyan);text-shadow:0 0 10px rgba(61,242,255,.4);
-  }
-  .acc-label{font-size:12px;color:var(--muted);font-family:'IBM Plex Mono',monospace;}
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Rajdhani:wght@500;600;700&family=IBM+Plex+Mono:wght@500&display=swap');
+:root{--bg:#0A0D16;--bg2:#111726;--panel:#141B2C;--line:#232C42;--cyan:#3DF2FF;--magenta:#FF3DBE;--green:#39FF88;--yellow:#FFD166;--orange:#FF9F43;--red:#FF3B4E;--text:#E7ECFB;--muted:#7F8AA7;--shadow:0 14px 40px rgba(0,0,0,.28)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;background:radial-gradient(circle at 10% 0%,rgba(61,242,255,.08),transparent 42%),radial-gradient(circle at 90% 12%,rgba(255,61,190,.07),transparent 40%),var(--bg);font-family:'Rajdhani',sans-serif;color:var(--text);padding:20px 12px calc(38px + env(safe-area-inset-bottom));display:flex;justify-content:center}.app{width:100%;max-width:520px}.topbar{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:2px 2px 14px}.topbar h1{font-family:'Orbitron',sans-serif;font-size:20px;letter-spacing:.08em;color:var(--cyan);margin:0;text-shadow:0 0 14px rgba(61,242,255,.35)}.subtitle{font:11px 'IBM Plex Mono',monospace;color:var(--muted);margin-top:5px}.count{font:11px 'IBM Plex Mono',monospace;color:var(--muted);white-space:nowrap}.progress-track{height:5px;background:var(--line);border-radius:99px;overflow:hidden;margin-bottom:14px}.progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--magenta));transition:width .2s ease}.quickstats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:14px}.qstat{background:rgba(20,27,44,.82);border:1px solid var(--line);border-radius:10px;padding:9px 8px;text-align:center}.qnum{font:700 16px 'Orbitron',sans-serif;color:var(--text)}.qlabel{font:9px 'IBM Plex Mono',monospace;color:var(--muted);text-transform:uppercase;margin-top:3px}.stage{position:relative;height:320px;margin-bottom:12px}.stack{position:absolute;inset:0;background:var(--bg2);border:1px solid var(--line);border-radius:16px;transform:translateY(9px) scale(.965)}.stack.s2{transform:translateY(17px) scale(.93);opacity:.55}.card{position:absolute;inset:0;perspective:1200px;cursor:pointer;user-select:none}.card-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .28s cubic-bezier(.2,.8,.2,1)}.card.flipped .card-inner{transform:rotateY(180deg)}.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:16px;background:linear-gradient(160deg,#161f33,#111827);border:1px solid var(--cyan);box-shadow:0 0 20px rgba(61,242,255,.13),var(--shadow);padding:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}.face-back{transform:rotateY(180deg);border-color:var(--magenta);box-shadow:0 0 20px rgba(255,61,190,.12),var(--shadow)}.eyebrow{font:10px 'IBM Plex Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);margin-bottom:12px}.face-back .eyebrow{color:var(--magenta)}.word{font:600 clamp(22px,7vw,30px) 'Orbitron',sans-serif;line-height:1.22;overflow-wrap:anywhere}.hint{font:10px 'IBM Plex Mono',monospace;color:var(--muted);margin-top:14px}.example{width:100%;margin-top:18px;padding-top:14px;border-top:1px solid var(--line);font-size:16px;line-height:1.25}.example .es{color:var(--muted);font-size:13px;margin-top:6px}.speaker{position:absolute;right:13px;top:13px;z-index:5;width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:rgba(10,13,22,.72);color:var(--cyan);font-size:18px;display:grid;place-items:center;cursor:pointer}.speaker:active{transform:scale(.95)}.typingBox{display:none;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px;margin-bottom:10px}.typingBox.active{display:block}.typingLabel{font:10px 'IBM Plex Mono',monospace;color:var(--yellow);text-transform:uppercase;margin-bottom:7px}.typingRow{display:flex;gap:7px}.typingRow input{flex:1;min-width:0;background:var(--bg2);color:var(--text);border:1px solid var(--line);border-radius:9px;padding:12px;font-size:16px;font-family:'Rajdhani',sans-serif}.typingRow input:focus{outline:none;border-color:var(--cyan)}.checkBtn{border:1px solid var(--cyan);background:var(--bg2);color:var(--cyan);border-radius:9px;padding:0 14px;font-weight:700}.typingFeedback{min-height:16px;font:10px 'IBM Plex Mono',monospace;margin-top:6px}.rating{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:9px}.rate{min-height:50px;border-radius:10px;background:var(--panel);font-family:'Rajdhani',sans-serif;font-weight:700;border:1px solid var(--line);font-size:12px;color:var(--text);cursor:pointer;padding:7px 3px}.rate span{display:block;font:9px 'IBM Plex Mono',monospace;margin-top:2px;opacity:.7}.rate.again{color:var(--red);border-color:rgba(255,59,78,.65)}.rate.hard{color:var(--orange);border-color:rgba(255,159,67,.65)}.rate.good{color:var(--green);border-color:rgba(57,255,136,.65)}.rate.easy{color:var(--cyan);border-color:rgba(61,242,255,.65)}.rate:active,.control:active,.add-btn:active{transform:scale(.98)}.controls{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:14px}.control{border:1px solid var(--line);background:var(--panel);color:var(--muted);border-radius:10px;min-height:43px;font-family:'Rajdhani',sans-serif;font-weight:600;cursor:pointer}.layout{display:block}.panel{margin-top:9px;border:1px solid var(--line);background:rgba(20,27,44,.72);border-radius:12px;overflow:hidden}.panel summary{cursor:pointer;list-style:none;padding:14px;font:11px 'IBM Plex Mono',monospace;color:var(--muted);text-transform:uppercase}.panel summary::-webkit-details-marker{display:none}.panel[open] summary{color:var(--cyan);border-bottom:1px solid var(--line)}.panelBody{padding:14px}.statHero{display:grid;grid-template-columns:1.15fr .85fr;gap:8px;margin-bottom:12px}.heroBox{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:12px}.heroBig{font:800 23px 'Orbitron',sans-serif;color:var(--cyan)}.heroLabel{font:10px 'IBM Plex Mono',monospace;color:var(--muted);margin-top:4px}.recommend{font-size:14px;line-height:1.25}.sectionTitle{font:10px 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.08em;margin:14px 0 7px;color:var(--muted)}.statRow{display:grid;grid-template-columns:minmax(0,1fr) 62px 48px;gap:8px;align-items:center;padding:7px 0;border-bottom:1px solid var(--line);font-size:13px}.statRow .wordName{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.miniBar{height:5px;background:var(--line);border-radius:9px;overflow:hidden}.miniBar>i{display:block;height:100%;background:linear-gradient(90deg,var(--red),var(--green))}.pct{font:10px 'IBM Plex Mono',monospace;text-align:right;color:var(--muted)}.week{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;align-items:end;height:82px;padding-top:8px}.day{display:flex;height:100%;flex-direction:column;justify-content:end;align-items:center;gap:4px}.daybar{width:100%;max-width:24px;min-height:3px;border-radius:5px 5px 2px 2px;background:linear-gradient(180deg,var(--cyan),var(--magenta));opacity:.85}.daylabel{font:8px 'IBM Plex Mono',monospace;color:var(--muted)}.form-row{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:7px}.form-row input{min-width:0;background:var(--bg2);color:var(--text);border:1px solid var(--line);border-radius:9px;padding:11px;font-family:'Rajdhani',sans-serif}.form-row input:focus{outline:none;border-color:var(--cyan)}.add-btn{width:100%;min-height:42px;border:1px solid var(--cyan);background:var(--bg2);color:var(--cyan);border-radius:9px;font-weight:700;margin-bottom:10px}.list{max-height:310px;overflow:auto}.list-item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}.li-words{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:13px}.li-es{color:var(--muted);margin-left:5px}.li-meta{font:9px 'IBM Plex Mono',monospace;color:var(--muted);margin-top:2px}.li-right{display:flex;align-items:center;gap:7px}.dots{display:flex;gap:3px}.dot{width:7px;height:7px;border-radius:50%;background:var(--line)}.dot.r{background:var(--red)}.dot.y{background:var(--orange)}.dot.g{background:var(--green)}.dot.e{background:var(--cyan)}.li-del{border:0;background:none;color:var(--muted);font-size:18px;cursor:pointer}.empty{text-align:center;color:var(--muted);font-size:13px;padding:20px 6px}.toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));transform:translate(-50%,20px);background:#101827;border:1px solid var(--line);border-radius:9px;padding:9px 12px;font:11px 'IBM Plex Mono',monospace;color:var(--text);opacity:0;pointer-events:none;transition:.2s;z-index:50}.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(min-width:820px){body{padding:42px 20px}.app{max-width:920px}.layout{display:grid;grid-template-columns:390px 1fr;gap:26px;align-items:start}.stage{height:350px}.side .panel{margin-top:0;margin-bottom:14px}.topbar h1{font-size:26px}.quickstats{max-width:390px}.study{position:sticky;top:24px}}
+@media(max-width:380px){.stage{height:300px}.rate{font-size:11px}.word{font-size:21px}.example{font-size:14px}.qnum{font-size:14px}}
 </style>
 </head>
 <body>
 <div class="app">
-
-  <div id="syncWarning" class="sync-warning">
-    ⚠ sin sincronización — configura JSONBIN_ID y JSONBIN_KEY en el archivo (mira los comentarios arriba del script) para que tu progreso se guarde entre dispositivos.
-  </div>
-
-  <div class="topbar">
-    <h1>VOCABULARIO</h1>
-    <div class="count" id="counter">0 / 0</div>
-  </div>
-
-  <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
-
+  <div class="topbar"><div><h1>VOCABULARIO</h1><div class="subtitle">smart review · móvil primero</div></div><div class="count" id="counter">0 / 0</div></div>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="quickstats"><div class="qstat"><div class="qnum" id="qDue">0</div><div class="qlabel">por repasar</div></div><div class="qstat"><div class="qnum" id="qToday">0</div><div class="qlabel">hoy</div></div><div class="qstat"><div class="qnum" id="qAcc">—</div><div class="qlabel">precisión</div></div></div>
   <div class="layout">
-
-    <div class="study">
-      <div class="stage" id="stage">
-        <div class="stack-shadow s2"></div>
-        <div class="stack-shadow"></div>
-        <div class="card" id="card">
-          <div class="card-inner">
-            <div class="face face-front">
-              <div class="eyebrow" id="frontLabel">Inglés</div>
-              <div class="word" id="frontWord">—</div>
-              <div class="hint">toca para voltear</div>
-            </div>
-            <div class="face face-back">
-              <div class="eyebrow" id="backLabel">Español</div>
-              <div class="word" id="backWord">—</div>
-              <div class="hint">toca para voltear</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="actions">
-        <button class="btn review" id="btnReview">✕ repasar</button>
-        <button class="btn known" id="btnKnown">✓ lo sé</button>
-      </div>
-      <div class="row">
-        <button class="btn ghost" id="btnDir">⇄ EN→ES</button>
-        <button class="btn ghost" id="btnShuffle">⤮ mezclar</button>
-      </div>
-    </div>
-
-    <div class="side">
-      <details class="panel-box">
-        <summary>⚡ estadísticas</summary>
-        <div id="statsBox"></div>
-      </details>
-
-      <details class="panel-box">
-        <summary>+ agregar / administrar palabras</summary>
-        <div class="form-row">
-          <input type="text" id="inputEn" placeholder="inglés">
-          <input type="text" id="inputEs" placeholder="español">
-          <button class="add-btn" id="btnAdd">añadir</button>
-        </div>
-        <div class="list" id="wordList"></div>
-      </details>
-    </div>
-
+    <main class="study">
+      <div class="stage"><div class="stack s2"></div><div class="stack"></div><div class="card" id="card"><button class="speaker" id="speaker" aria-label="Pronunciar">🔊</button><div class="card-inner"><section class="face face-front"><div class="eyebrow" id="frontLabel">Inglés</div><div class="word" id="frontWord">—</div><div class="hint" id="frontHint">toca para voltear</div></section><section class="face face-back"><div class="eyebrow" id="backLabel">Español</div><div class="word" id="backWord">—</div><div class="example" id="exampleBox"></div><div class="hint">toca para volver</div></section></div></div></div>
+      <div class="typingBox" id="typingBox"><div class="typingLabel">✍ reto activo · escribe la palabra en inglés</div><div class="typingRow"><input id="typingInput" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Escribe aquí…"><button class="checkBtn" id="checkBtn">OK</button></div><div class="typingFeedback" id="typingFeedback"></div></div>
+      <div class="rating"><button class="rate again" data-rate="again">✕ Otra vez<span>~1 min</span></button><button class="rate hard" data-rate="hard">△ Difícil<span>~10 min</span></button><button class="rate good" data-rate="good">✓ Bien<span>mañana+</span></button><button class="rate easy" data-rate="easy">⚡ Fácil<span>más tarde</span></button></div>
+      <div class="controls"><button class="control" id="btnDir">⇄ EN → ES</button><button class="control" id="btnShuffle">⤮ mezclar sesión</button></div>
+    </main>
+    <aside class="side">
+      <details class="panel" open><summary>⚡ estadísticas útiles</summary><div class="panelBody" id="statsBox"></div></details>
+      <details class="panel"><summary>+ agregar / administrar palabras</summary><div class="panelBody"><div class="form-row"><input id="inputEn" placeholder="inglés"><input id="inputEs" placeholder="español"></div><div class="form-row"><input id="inputEx" placeholder="ejemplo en inglés (opcional)"><input id="inputExEs" placeholder="traducción (opcional)"></div><button class="add-btn" id="btnAdd">añadir palabra</button><div class="list" id="wordList"></div></div></details>
+    </aside>
   </div>
-
 </div>
-
+<div class="toast" id="toast"></div>
 <script>
 const seed = [
-  ["forbearance","paciencia"],["may","puede"],["grown-up","adulto"],
-  ["everything","todo"],["even","incluso"],["hungry","hambriento"],
-  ["cheering","alegre"],["enough","suficiente"],
-  ["whom","a quien"],["grew","creció"],["although","aunque"],
-  ["ATM","cajero automático"],["makeup","maquillaje"],["furniture","mueble"],
-  ["letters","letras"],["slides","diapositivas"],
-  ["gonna","voy a (forma informal de \"going to\")"],["wand","varita"],
-  ["handle it","manejarlo / encargarse de ello"],["screaming","gritando"],
-  ["send","enviar"],["sobbing","sollozando / llorando desconsoladamente"],
-  ["wayward","rebelde / descarriado"],["sweetheart","cariño / amor / querido(a)"],
-  ["safer","más seguro"],["place","lugar"],["laughter","risa"],
-  ["roars","rugidos / ruge"],["another","otro / otra"],["someone","alguien"],
-  ["trouble","problema / problemas"],["looks","parece / mira"],
-  ["like","como / gustar"],["looks like","parece"],["guess","adivinar / supongo"],
-  ["everyone","todos / todo el mundo"],["feeling","sentimiento / sintiendo"],
-  ["must","debe / debe de"],["embarrassed","avergonzado"],
-  ["right","correcto / derecha / bien"],["pretty","bonito / bastante / muy (intensificador)"],
-  ["meet","conocer / encontrarse con"],["foreign","extranjero"],
-  ["exchange student","estudiante de intercambio"],["change","cambiar"],
-  ["growls","gruñe / gruñidos"],["misunderstood","malinterpretado / incomprendido"],
-  ["showing","mostrando"],["whatever","lo que sea / da igual"],
-  ["heard","escuchó / oído"],["careful","cuidadoso / ten cuidado"],
-  ["helmet","casco"],["labeled","etiquetado"],
-  ["taking risks","tomando riesgos / arriesgándose"],["frankly","francamente"],
-  ["thought","pensamiento / pensó"],["won't","no hará / no va a"],
-  ["will","será / hará / va a"],["gotten","obtenido / conseguido"],
-  ["puppies","cachorros"],["tracked","rastreado / seguido"],
-  ["hidden","escondido / oculto"],["I've","he / yo he"],
-  ["wish","desear / deseo"],["anymore","ya no"],
-  ["moving","moviendo / mudándose"],["deal","trato / acuerdo / lidiar con"],
-  ["I'll","yo voy a / yo haré"],["come","venir"],
-  ["refill","rellenar / volver a llenar"],["let","dejar / permitir"],
-  ["inside","dentro / adentro"],["soggy","empapado / húmedo"],
-  ["bring","traer"],["tell","decir / contar"],
-  ["anything","cualquier cosa / nada (según contexto)"],
-  ["unguarded","sin vigilancia / desprevenido"],
-  ["work out","hacer ejercicio / resolver / funcionar"],["morons","idiotas"],
-  ["come on","vamos / anda / date prisa"],["back","atrás / de vuelta / espalda"],
-  ["ever","alguna vez"],["taken","tomado / llevado"],["done","hecho / terminado"],
-  ["bake","hornear"],["stages","etapas"],
-  ["sick","enfermo / asqueroso (según contexto)"],["hall","pasillo / salón"],
-  ["teenager","adolescente"]
+["forbearance","paciencia","Her forbearance helped us stay calm.","Su paciencia nos ayudó a mantener la calma."],["may","puede","It may rain later.","Puede que llueva más tarde."],["grown-up","adulto","He is a grown-up now.","Ahora es un adulto."],["everything","todo","Everything is ready.","Todo está listo."],["even","incluso","Even my brother liked it.","Incluso a mi hermano le gustó."],["hungry","hambriento","I'm hungry after class.","Tengo hambre después de clase."],["cheering","animando / vitoreando","The crowd was cheering loudly.","La multitud estaba animando con fuerza."],["enough","suficiente","We have enough time.","Tenemos suficiente tiempo."],["whom","a quien","Whom did you call?","¿A quién llamaste?"],["grew","creció","She grew up in Lima.","Ella creció en Lima."],["although","aunque","Although I was tired, I kept studying.","Aunque estaba cansado, seguí estudiando."],["ATM","cajero automático","I need to find an ATM.","Necesito encontrar un cajero automático."],["makeup","maquillaje","She bought new makeup.","Ella compró maquillaje nuevo."],["furniture","mueble / mobiliario","We need new furniture for the room.","Necesitamos muebles nuevos para la habitación."],["letters","letras / cartas","I wrote two letters yesterday.","Escribí dos cartas ayer."],["slides","diapositivas","The presentation has ten slides.","La presentación tiene diez diapositivas."],["gonna","voy a (informal)","I'm gonna call you later.","Voy a llamarte más tarde."],["wand","varita","The wizard raised his wand.","El mago levantó su varita."],["handle it","manejarlo / encargarse de ello","Don't worry, I can handle it.","No te preocupes, puedo encargarme."],["screaming","gritando","Someone was screaming outside.","Alguien estaba gritando afuera."],["send","enviar","Please send me the file.","Por favor, envíame el archivo."],["sobbing","sollozando","The child was sobbing quietly.","El niño estaba sollozando en silencio."],["wayward","rebelde / descarriado","The story is about a wayward teenager.","La historia trata de un adolescente rebelde."],["sweetheart","cariño / amor","Good morning, sweetheart.","Buenos días, cariño."],["safer","más seguro","This street is safer at night.","Esta calle es más segura de noche."],["place","lugar","This is a nice place to study.","Este es un buen lugar para estudiar."],["laughter","risa","We heard laughter in the room.","Escuchamos risas en la habitación."],["roars","rugidos / ruge","The lion roars at night.","El león ruge por la noche."],["another","otro / otra","Can I have another one?","¿Puedo tener otro?"],["someone","alguien","Someone is at the door.","Hay alguien en la puerta."],["trouble","problema / problemas","He is in trouble again.","Está en problemas otra vez."],["looks","parece / mira","She looks tired today.","Ella parece cansada hoy."],["like","como / gustar","I like this song.","Me gusta esta canción."],["looks like","parece","It looks like rain.","Parece que va a llover."],["guess","adivinar / supongo","I guess you're right.","Supongo que tienes razón."],["everyone","todos / todo el mundo","Everyone is waiting for you.","Todos te están esperando."],["feeling","sentimiento / sintiendo","I have a strange feeling.","Tengo una sensación extraña."],["must","debe / tener que","You must wear a helmet.","Debes usar casco."],["embarrassed","avergonzado","I felt embarrassed after the mistake.","Me sentí avergonzado después del error."],["right","correcto / derecha / bien","You were right about the answer.","Tenías razón sobre la respuesta."],["pretty","bonito / bastante","The test was pretty easy.","El examen fue bastante fácil."],["meet","conocer / encontrarse con","Let's meet after class.","Encontrémonos después de clase."],["foreign","extranjero","He wants to learn a foreign language.","Quiere aprender un idioma extranjero."],["exchange student","estudiante de intercambio","She's an exchange student from Canada.","Ella es una estudiante de intercambio de Canadá."],["change","cambiar / cambio","I need to change my schedule.","Necesito cambiar mi horario."],["growls","gruñe / gruñidos","The dog growls at strangers.","El perro gruñe a los extraños."],["misunderstood","malinterpretado / incomprendido","I think you misunderstood me.","Creo que me malinterpretaste."],["showing","mostrando","He's showing me his project.","Él me está mostrando su proyecto."],["whatever","lo que sea / da igual","Choose whatever you want.","Elige lo que quieras."],["heard","escuchó / oído","I heard a strange noise.","Escuché un ruido extraño."],["careful","cuidadoso / ten cuidado","Be careful with that glass.","Ten cuidado con ese vaso."],["helmet","casco","Always wear a helmet on a bike.","Siempre usa casco en bicicleta."],["labeled","etiquetado","The box was labeled fragile.","La caja estaba etiquetada como frágil."],["taking risks","tomando riesgos / arriesgándose","Taking risks can help you grow.","Tomar riesgos puede ayudarte a crecer."],["frankly","francamente","Frankly, I don't agree.","Francamente, no estoy de acuerdo."],["thought","pensamiento / pensó","I thought the class started at eight.","Pensé que la clase empezaba a las ocho."],["won't","no hará / no va a","I won't forget your message.","No olvidaré tu mensaje."],["will","hará / será","I will call you tomorrow.","Te llamaré mañana."],["gotten","obtenido / conseguido","I've gotten better at English.","He mejorado en inglés."],["puppies","cachorros","The puppies are sleeping.","Los cachorros están durmiendo."],["tracked","rastreado / seguido","The package was tracked online.","El paquete fue rastreado en línea."],["hidden","escondido / oculto","The key was hidden under the table.","La llave estaba escondida debajo de la mesa."],["I've","yo he","I've seen that movie before.","He visto esa película antes."],["wish","desear / deseo","I wish I had more time.","Ojalá tuviera más tiempo."],["anymore","ya no","I don't live there anymore.","Ya no vivo allí."],["moving","moviendo / mudándose","We're moving next month.","Nos mudamos el próximo mes."],["deal","trato / acuerdo / lidiar con","I can deal with this problem.","Puedo lidiar con este problema."],["I'll","yo haré / voy a","I'll help you later.","Te ayudaré más tarde."],["come","venir","Come with us.","Ven con nosotros."],["refill","rellenar / volver a llenar","Can you refill my water bottle?","¿Puedes rellenar mi botella de agua?"],["let","dejar / permitir","Let me explain.","Déjame explicar."],["inside","dentro / adentro","Your phone is inside the bag.","Tu teléfono está dentro de la mochila."],["soggy","empapado / húmedo","The bread became soggy.","El pan quedó empapado."],["bring","traer","Bring your notebook tomorrow.","Trae tu cuaderno mañana."],["tell","decir / contar","Tell me what happened.","Dime qué pasó."],["anything","cualquier cosa / nada","Do you need anything?","¿Necesitas algo?"],["unguarded","sin vigilancia / desprevenido","The entrance was left unguarded.","La entrada quedó sin vigilancia."],["work out","hacer ejercicio / resolver / funcionar","I work out three times a week.","Hago ejercicio tres veces por semana."],["morons","idiotas","Those morons broke the sign.","Esos idiotas rompieron el letrero."],["come on","vamos / anda","Come on, we're late!","¡Vamos, llegamos tarde!"],["back","atrás / de vuelta / espalda","I'll be back soon.","Volveré pronto."],["ever","alguna vez","Have you ever been to Cusco?","¿Alguna vez has estado en Cusco?"],["taken","tomado / llevado","This seat is already taken.","Este asiento ya está ocupado."],["done","hecho / terminado","I'm done with my homework.","Terminé mi tarea."],["bake","hornear","We bake bread every morning.","Horneamos pan cada mañana."],["stages","etapas","The project has three stages.","El proyecto tiene tres etapas."],["sick","enfermo / asqueroso","I felt sick yesterday.","Me sentí enfermo ayer."],["hall","pasillo / salón","Wait for me in the hall.","Espérame en el pasillo."],["teenager","adolescente","He was a shy teenager.","Era un adolescente tímido."]
 ];
 
-let cards = [];
-let queue = [];
-let current = null;
-let flipped = false;
-let direction = 'en-es';
-let sessionSeen = new Set();
-
-// ---- CONFIGURACIÓN DE SINCRONIZACIÓN EN LA NUBE ----
-// 1. Entra a https://jsonbin.io y crea una cuenta gratis.
-// 2. Crea un "bin" nuevo con el contenido: []
-// 3. Copia el "Bin ID" y pégalo abajo en JSONBIN_ID.
-// 4. En tu cuenta ve a API Keys, copia la "X-Master-Key" y pégala en JSONBIN_KEY.
-// 5. Sube el archivo con esos dos valores ya puestos a tu repositorio de GitHub.
-// Así el mismo bin se lee y escribe desde cualquier dispositivo que abra el link.
-const JSONBIN_ID = '6a62572ada38895dfe861422';
-const JSONBIN_KEY = '$2a$10$q9Jjy8aXkFGBYLcTTwdoguLqkojGM0pi91bik2kK67ZtRcvLqQ3um';
-const CLOUD_READY = !JSONBIN_ID.startsWith('PON_AQUI') && !JSONBIN_KEY.startsWith('PON_AQUI');
-
-function uid(){ return Math.random().toString(36).slice(2,9); }
-
-async function cloudGet(){
-  if(!CLOUD_READY) return null;
-  try{
-    const res = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_ID}/latest`, {
-      headers:{ 'X-Master-Key': JSONBIN_KEY }
-    });
-    if(!res.ok) return null;
-    const data = await res.json();
-    return Array.isArray(data.record) ? data.record : null;
-  }catch(e){ console.error('cloud load error', e); return null; }
-}
-
-async function cloudSet(payload){
-  if(!CLOUD_READY) return;
-  try{
-    await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_ID}`, {
-      method:'PUT',
-      headers:{ 'Content-Type':'application/json', 'X-Master-Key': JSONBIN_KEY },
-      body: JSON.stringify(payload)
-    });
-  }catch(e){ console.error('cloud save error', e); }
-}
-
-async function load(){
-  const banner = document.getElementById('syncWarning');
-  if(!CLOUD_READY){
-    banner.style.display = 'block';
-  }
-  const remote = await cloudGet();
-  cards = remote || [];
-  cards.forEach(c => {
-    if(!Array.isArray(c.history)) c.history = [];
-    if(typeof c.rounds !== 'number') c.rounds = 0;
-    if(typeof c.totalKnown !== 'number') c.totalKnown = 0;
-    if(typeof c.totalReview !== 'number') c.totalReview = 0;
-    c.known = false;
-  });
-  const existing = new Set(cards.map(c => c.en.toLowerCase()));
-  let added = false;
-  seed.forEach(([en,es]) => {
-    if(!existing.has(en.toLowerCase())){
-      cards.push({id:uid(), en, es, known:false, history:[], rounds:0, totalKnown:0, totalReview:0});
-      existing.add(en.toLowerCase());
-      added = true;
-    }
-  });
-  await save();
-  sessionSeen = new Set();
-  buildQueue();
-  renderList();
-  renderStats();
-  showNext();
-}
-
-async function save(){
-  await cloudSet(cards);
-}
-
-function buildQueue(){
-  queue = cards.filter(c => !c.known).map(c => c.id);
-  shuffleArray(queue);
-}
-
-function shuffleArray(arr){
-  for(let i=arr.length-1;i>0;i--){
-    const j = Math.floor(Math.random()*(i+1));
-    [arr[i],arr[j]] = [arr[j],arr[i]];
-  }
-}
-
-function updateCounter(){
-  document.getElementById('counter').textContent = `${sessionSeen.size} / ${cards.length}`;
-  const pct = cards.length ? Math.round(sessionSeen.size/cards.length*100) : 0;
-  document.getElementById('progressFill').style.width = pct + '%';
-}
-
-function showNext(){
-  flipped = false;
-  document.getElementById('card').classList.remove('flipped');
-  updateCounter();
-
-  if(cards.length === 0){
-    document.getElementById('frontWord').textContent = 'sin tarjetas';
-    document.getElementById('backWord').textContent = '';
-    current = null;
-    return;
-  }
-  if(queue.length === 0){
-    buildQueue();
-    if(queue.length === 0){
-      document.getElementById('frontWord').textContent = '¡todo aprendido!';
-      document.getElementById('backWord').textContent = '🏆';
-      current = null;
-      return;
-    }
-  }
-  const id = queue[0];
-  current = cards.find(c => c.id === id);
-  renderCard();
-}
-
-function renderCard(){
-  if(!current) return;
-  const frontIsEn = direction === 'en-es';
-  document.getElementById('frontLabel').textContent = frontIsEn ? 'Inglés' : 'Español';
-  document.getElementById('backLabel').textContent = frontIsEn ? 'Español' : 'Inglés';
-  document.getElementById('frontWord').textContent = frontIsEn ? current.en : current.es;
-  document.getElementById('backWord').textContent = frontIsEn ? current.es : current.en;
-}
-
-document.getElementById('card').addEventListener('click', () => {
-  if(!current) return;
-  flipped = !flipped;
-  document.getElementById('card').classList.toggle('flipped', flipped);
-});
-
-function pushHistory(card, mark){
-  card.history.push(mark);
-  if(mark === 'g') card.totalKnown = (card.totalKnown || 0) + 1;
-  else card.totalReview = (card.totalReview || 0) + 1;
-  if(card.history.length >= 5){
-    card.history = [];
-    card.rounds = (card.rounds || 0) + 1;
-  }
-}
-
-document.getElementById('btnKnown').addEventListener('click', async () => {
-  if(!current) return;
-  current.known = true;
-  pushHistory(current, 'g');
-  sessionSeen.add(current.id);
-  queue.shift();
-  await save();
-  renderList();
-  renderStats();
-  showNext();
-});
-
-document.getElementById('btnReview').addEventListener('click', async () => {
-  if(!current) return;
-  current.known = false;
-  pushHistory(current, 'r');
-  sessionSeen.add(current.id);
-  const id = queue.shift();
-  queue.push(id);
-  await save();
-  renderList();
-  renderStats();
-  showNext();
-});
-
-document.getElementById('btnDir').addEventListener('click', () => {
-  direction = direction === 'en-es' ? 'es-en' : 'en-es';
-  document.getElementById('btnDir').textContent = direction === 'en-es' ? '⇄ EN→ES' : '⇄ ES→EN';
-  flipped = false;
-  document.getElementById('card').classList.remove('flipped');
-  renderCard();
-});
-
-document.getElementById('btnShuffle').addEventListener('click', async () => {
-  cards.forEach(c => { c.known = false; });
-  sessionSeen = new Set();
-  buildQueue();
-  await save();
-  renderList();
-  renderStats();
-  showNext();
-});
-
-document.getElementById('btnAdd').addEventListener('click', async () => {
-  const en = document.getElementById('inputEn').value.trim();
-  const es = document.getElementById('inputEs').value.trim();
-  if(!en || !es) return;
-  cards.push({id:uid(), en, es, known:false, history:[], rounds:0, totalKnown:0, totalReview:0});
-  document.getElementById('inputEn').value = '';
-  document.getElementById('inputEs').value = '';
-  await save();
-  buildQueue();
-  renderList();
-  renderStats();
-  if(!current) showNext();
-});
-
-function renderList(){
-  const list = document.getElementById('wordList');
-  list.innerHTML = '';
-  if(cards.length === 0){
-    list.innerHTML = '<div class="empty-msg">todavía no hay palabras</div>';
-    return;
-  }
-  cards.slice().sort((a,b) => a.en.localeCompare(b.en)).forEach(c => {
-    const row = document.createElement('div');
-    row.className = 'list-item';
-
-    const words = document.createElement('span');
-    words.className = 'li-words';
-    const roundsTag = c.rounds > 0 ? ` <span class="li-rounds">(${c.rounds})</span>` : '';
-    words.innerHTML = `<span class="li-en">${escapeHtml(c.en)}</span>${roundsTag}<span class="li-es">— ${escapeHtml(c.es)}</span>`;
-
-    const right = document.createElement('span');
-    right.className = 'li-right';
-
-    const dots = document.createElement('span');
-    dots.className = 'dots';
-    const hist = c.history.slice(-5);
-    const padded = hist.concat(Array(5 - hist.length).fill(null));
-    padded.forEach(m => {
-      const d = document.createElement('span');
-      d.className = 'dot' + (m === 'g' ? ' g' : m === 'r' ? ' r' : '');
-      dots.appendChild(d);
-    });
-
-    const del = document.createElement('button');
-    del.className = 'li-del';
-    del.innerHTML = '&times;';
-    del.addEventListener('click', async () => {
-      cards = cards.filter(x => x.id !== c.id);
-      await save();
-      buildQueue();
-      renderList();
-      renderStats();
-      showNext();
-    });
-
-    right.appendChild(dots);
-    right.appendChild(del);
-    row.appendChild(words);
-    row.appendChild(right);
-    list.appendChild(row);
-  });
-}
-
-function renderStats(){
-  const box = document.getElementById('statsBox');
-  box.innerHTML = '';
-
-  const totalG = cards.reduce((sum,c) => sum + (c.totalKnown || 0), 0);
-  const totalR = cards.reduce((sum,c) => sum + (c.totalReview || 0), 0);
-  const totalAttempts = totalG + totalR;
-
-  if(totalAttempts === 0){
-    box.innerHTML = '<div class="empty-msg">practica unas rondas y aquí verás tus palabras débiles y fuertes</div>';
-    return;
-  }
-
-  const accuracy = Math.round((totalG / totalAttempts) * 100);
-  const totalRounds = cards.reduce((sum,c) => sum + (c.rounds || 0), 0);
-  const acc = document.createElement('div');
-  acc.className = 'accuracy-pill';
-  acc.innerHTML = `<span class="acc-num">${accuracy}%</span><span class="acc-label">precisión general · ${totalRounds} vueltas completadas</span>`;
-  box.appendChild(acc);
-
-  const withHistory = cards.filter(c => c.history.length > 0);
-  const scored = withHistory.map(c => {
-    const hist = c.history.slice(-5);
-    const reds = hist.filter(m => m === 'r').length;
-    const greens = hist.filter(m => m === 'g').length;
-    return {c, reds, greens};
-  });
-
-  const needsWork = scored.filter(s => s.reds > 0)
-    .sort((a,b) => b.reds - a.reds || b.c.history.length - a.c.history.length)
-    .slice(0,5);
-
-  const solid = scored.filter(s => s.reds === 0 && s.greens > 0)
-    .sort((a,b) => b.greens - a.greens)
-    .slice(0,5);
-
-  if(needsWork.length){
-    const g = document.createElement('div');
-    g.className = 'stat-group';
-    g.innerHTML = '<div class="stat-title needs">⚠ repasa más</div>';
-    needsWork.forEach(s => {
-      const row = document.createElement('div');
-      row.className = 'stat-row';
-      row.innerHTML = `<span>${escapeHtml(s.c.en)}</span><span class="es">${escapeHtml(s.c.es)}</span>`;
-      g.appendChild(row);
-    });
-    box.appendChild(g);
-  }
-
-  if(solid.length){
-    const g = document.createElement('div');
-    g.className = 'stat-group';
-    g.innerHTML = '<div class="stat-title good">✓ las dominas</div>';
-    solid.forEach(s => {
-      const row = document.createElement('div');
-      row.className = 'stat-row';
-      row.innerHTML = `<span>${escapeHtml(s.c.en)}</span><span class="es">${escapeHtml(s.c.es)}</span>`;
-      g.appendChild(row);
-    });
-    box.appendChild(g);
-  }
-
-  if(!needsWork.length && !solid.length){
-    box.innerHTML = '<div class="empty-msg">practica unas rondas y aquí verás tus palabras débiles y fuertes</div>';
-  }
-}
-
-function escapeHtml(s){
-  const d = document.createElement('div');
-  d.textContent = s;
-  return d.innerHTML;
-}
-
+const STORAGE_KEY='vocab-smart-v2';
+let cards=[];let queue=[];let current=null;let flipped=false;let direction='en-es';let sessionSeen=new Set();let typingMode=false;let typingLocked=false;let saveTimer=null;
+const $=id=>document.getElementById(id);
+function uid(){return (crypto.randomUUID?.()||Math.random().toString(36).slice(2)+Date.now().toString(36)).slice(0,14)}
+function todayKey(d=new Date()){return d.toLocaleDateString('en-CA')}
+function normalizeText(s){return s.toLowerCase().trim().replace(/[’‘]/g,"'").replace(/\s+/g,' ').normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
+function escapeHtml(s){const d=document.createElement('div');d.textContent=s??'';return d.innerHTML}
+function baseCard(en,es,ex='',exEs=''){return{id:uid(),en,es,example:ex,exampleEs:exEs,history:[],rounds:0,totalKnown:0,totalReview:0,attempts:0,streak:0,ease:2.3,intervalDays:0,dueAt:0,lastSeen:0,updatedAt:Date.now(),dayStats:{}}}
+function migrate(c){const x={...baseCard(c.en,c.es,c.example||'',c.exampleEs||''),...c};x.history=Array.isArray(c.history)?c.history.slice(-20):[];x.dayStats=c.dayStats||{};x.attempts=Number.isFinite(c.attempts)?c.attempts:(c.totalKnown||0)+(c.totalReview||0);x.dueAt=Number.isFinite(c.dueAt)?c.dueAt:0;x.ease=Number.isFinite(c.ease)?c.ease:2.3;x.intervalDays=Number.isFinite(c.intervalDays)?c.intervalDays:0;x.streak=Number.isFinite(c.streak)?c.streak:0;return x}
+function load(){try{cards=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]').map(migrate)}catch{cards=[]}const existing=new Set(cards.map(c=>c.en.toLowerCase()));for(const [en,es,ex,exEs] of seed){if(!existing.has(en.toLowerCase())){cards.push(baseCard(en,es,ex,exEs));existing.add(en.toLowerCase())}else{const c=cards.find(x=>x.en.toLowerCase()===en.toLowerCase());if(c&&!c.example){c.example=ex;c.exampleEs=exEs}}}persistNow();buildQueue();renderAll();showNext()}
+function persistNow(){localStorage.setItem(STORAGE_KEY,JSON.stringify(cards))}
+function scheduleSave(){clearTimeout(saveTimer);saveTimer=setTimeout(persistNow,80)}
+window.addEventListener('pagehide',persistNow);document.addEventListener('visibilitychange',()=>{if(document.hidden)persistNow()});
+function weakness(c){if(!c.attempts)return 1;const acc=(c.totalKnown||0)/Math.max(1,c.attempts);const overdue=Math.max(0,Date.now()-(c.dueAt||0))/86400000;return (1-acc)*2+Math.min(overdue,.8)+(c.streak===0?.25:0)}
+function buildQueue(){const now=Date.now();const due=cards.filter(c=>(c.dueAt||0)<=now);due.sort((a,b)=>weakness(b)-weakness(a)+(Math.random()-.5)*.15);queue=due.map(c=>c.id);if(!queue.length){queue=cards.slice().sort((a,b)=>(a.dueAt||0)-(b.dueAt||0)).slice(0,Math.min(20,cards.length)).map(c=>c.id)}sessionSeen=new Set();updateHeader()}
+function mastery(c){if(!c.attempts)return 0;const acc=(c.totalKnown||0)/Math.max(1,c.attempts);const streak=Math.min(c.streak||0,4)/4;return Math.round((acc*.72+streak*.28)*100)}
+function shouldType(c){const m=mastery(c);return direction==='en-es'&&c.attempts>=3&&m>=55&&m<88&&(c.attempts%3===1||Math.random()<.3)}
+function showNext(){flipped=false;typingLocked=false;$('card').classList.remove('flipped');$('typingFeedback').textContent='';if(!cards.length){current=null;$('frontWord').textContent='sin tarjetas';return}while(queue.length&& !cards.some(c=>c.id===queue[0]))queue.shift();if(!queue.length){buildQueue()}current=cards.find(c=>c.id===queue[0])||cards[0];typingMode=shouldType(current);$('typingBox').classList.toggle('active',typingMode);$('typingInput').value='';if(typingMode)setTimeout(()=>$('typingInput').focus({preventScroll:true}),120);renderCard();renderAll()}
+function renderCard(){if(!current)return;const frontIsEn=typingMode?false:direction==='en-es';$('frontLabel').textContent=frontIsEn?'Inglés':'Español';$('backLabel').textContent=frontIsEn?'Español':'Inglés';$('frontWord').textContent=frontIsEn?current.en:current.es;$('backWord').textContent=frontIsEn?current.es:current.en;$('frontHint').textContent=typingMode?'escríbela abajo para comprobar':'toca para voltear';const ex=current.example||`I am learning the word “${current.en}”.`;const exEs=current.exampleEs||'';$('exampleBox').innerHTML=`<div>${escapeHtml(ex)}</div>${exEs?`<div class="es">${escapeHtml(exEs)}</div>`:''}`}
+function updateHeader(){const due=cards.filter(c=>(c.dueAt||0)<=Date.now()).length;const today=todayKey();let a=0,k=0;cards.forEach(c=>{const s=c.dayStats?.[today];if(s){a+=s.attempts||0;k+=s.known||0}});$('qDue').textContent=due;$('qToday').textContent=a;$('qAcc').textContent=a?Math.round(k/a*100)+'%':'—';$('counter').textContent=`${sessionSeen.size} / ${cards.length}`;$('progressFill').style.width=(cards.length?Math.min(100,sessionSeen.size/cards.length*100):0)+'%'}
+function reschedule(c,rate){const now=Date.now();c.attempts=(c.attempts||0)+1;c.lastSeen=now;c.updatedAt=now;let mark='r';if(rate==='again'){c.totalReview++;c.streak=0;c.ease=Math.max(1.5,c.ease-.2);c.intervalDays=0;c.dueAt=now+60*1000;mark='r'}else if(rate==='hard'){c.totalReview++;c.streak=Math.max(0,c.streak-1);c.ease=Math.max(1.5,c.ease-.08);c.intervalDays=Math.max(.007,Math.min(1,(c.intervalDays||0)*1.2||.007));c.dueAt=now+10*60*1000;mark='y'}else if(rate==='good'){c.totalKnown++;c.streak++;c.ease=Math.min(3,c.ease+.03);c.intervalDays=c.intervalDays?Math.max(1,Math.round(c.intervalDays*c.ease)):1;c.dueAt=now+c.intervalDays*86400000;mark='g'}else{c.totalKnown++;c.streak++;c.ease=Math.min(3.2,c.ease+.12);c.intervalDays=c.intervalDays?Math.max(3,Math.round(c.intervalDays*(c.ease+.55))):3;c.dueAt=now+c.intervalDays*86400000;mark='e'}c.history.push(mark);c.history=c.history.slice(-20);if(c.attempts%5===0)c.rounds=(c.rounds||0)+1;const day=todayKey();c.dayStats[day]=c.dayStats[day]||{attempts:0,known:0};c.dayStats[day].attempts++;if(rate==='good'||rate==='easy')c.dayStats[day].known++;}
+function rateCurrent(rate){if(!current)return;reschedule(current,rate);sessionSeen.add(current.id);const id=queue.shift();if(rate==='again')queue.splice(Math.min(2,queue.length),0,id);else if(rate==='hard')queue.splice(Math.min(5,queue.length),0,id);scheduleSave();renderAll();showNext()}
+document.querySelectorAll('.rate').forEach(b=>b.addEventListener('click',()=>rateCurrent(b.dataset.rate)));
+$('card').addEventListener('click',e=>{if(e.target.closest('.speaker')||!current)return;if(typingMode&&!typingLocked){toast('Primero intenta escribirla 👇');return}flipped=!flipped;$('card').classList.toggle('flipped',flipped)});
+$('speaker').addEventListener('click',e=>{e.stopPropagation();speakCurrent()});
+function speakCurrent(){if(!current||!('speechSynthesis'in window)){toast('Tu navegador no tiene voz disponible');return}speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(current.en);u.lang='en-US';u.rate=.82;u.pitch=1;const voices=speechSynthesis.getVoices();const v=voices.find(v=>/^en(-|_)/i.test(v.lang));if(v)u.voice=v;speechSynthesis.speak(u)}
+function checkTyping(){if(!typingMode||!current)return;const ans=$('typingInput').value;if(!ans.trim())return;typingLocked=true;const ok=normalizeText(ans)===normalizeText(current.en);if(ok){$('typingFeedback').style.color='var(--green)';$('typingFeedback').textContent='✓ correcto · cuenta como “Bien”';toast('¡Correcto!');setTimeout(()=>rateCurrent('good'),380)}else{$('typingFeedback').style.color='var(--red)';$('typingFeedback').textContent=`✕ era: ${current.en} · ahora califícala tú`;flipped=true;$('card').classList.add('flipped')}}
+$('checkBtn').addEventListener('click',checkTyping);$('typingInput').addEventListener('keydown',e=>{if(e.key==='Enter')checkTyping()});
+$('btnDir').addEventListener('click',()=>{direction=direction==='en-es'?'es-en':'en-es';$('btnDir').textContent=direction==='en-es'?'⇄ EN → ES':'⇄ ES → EN';typingMode=false;$('typingBox').classList.remove('active');flipped=false;$('card').classList.remove('flipped');renderCard()});
+$('btnShuffle').addEventListener('click',()=>{buildQueue();for(let i=queue.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[queue[i],queue[j]]=[queue[j],queue[i]]}showNext();toast('Sesión mezclada')});
+$('btnAdd').addEventListener('click',()=>{const en=$('inputEn').value.trim(),es=$('inputEs').value.trim();if(!en||!es)return toast('Falta inglés o español');cards.push(baseCard(en,es,$('inputEx').value.trim(),$('inputExEs').value.trim()));['inputEn','inputEs','inputEx','inputExEs'].forEach(id=>$(id).value='');persistNow();buildQueue();renderAll();showNext();toast('Palabra añadida')});
+function renderList(){const el=$('wordList');el.innerHTML='';if(!cards.length){el.innerHTML='<div class="empty">todavía no hay palabras</div>';return}cards.slice().sort((a,b)=>a.en.localeCompare(b.en)).forEach(c=>{const row=document.createElement('div');row.className='list-item';const hist=c.history.slice(-5);row.innerHTML=`<div class="li-words"><b>${escapeHtml(c.en)}</b><span class="li-es">— ${escapeHtml(c.es)}</span><div class="li-meta">${c.attempts||0} intentos · ${mastery(c)}% dominio · ${c.rounds||0} vueltas</div></div><div class="li-right"><span class="dots">${hist.map(m=>`<i class="dot ${m}"></i>`).join('')}</span><button class="li-del">×</button></div>`;row.querySelector('.li-del').addEventListener('click',()=>{cards=cards.filter(x=>x.id!==c.id);persistNow();buildQueue();renderAll();showNext()});el.appendChild(row)})}
+function renderStats(){const box=$('statsBox');if(!cards.length){box.innerHTML='<div class="empty">sin datos</div>';return}const totalA=cards.reduce((s,c)=>s+(c.attempts||0),0),totalK=cards.reduce((s,c)=>s+(c.totalKnown||0),0);const acc=totalA?Math.round(totalK/totalA*100):0;const due=cards.filter(c=>(c.dueAt||0)<=Date.now()).length;const weak=cards.filter(c=>c.attempts>=2&&mastery(c)<55).length;const typingReady=cards.filter(c=>c.attempts>=3&&mastery(c)>=55&&mastery(c)<88).length;let recommendation=due?`Tienes <b>${due}</b> palabras listas para repasar ahora.`:weak?`No hay repasos vencidos. Conviene reforzar tus <b>${weak}</b> palabras más débiles.`:`Vas bien. Puedes hacer una sesión corta para mantenerlas frescas.`;const scored=cards.filter(c=>c.attempts>0).slice().sort((a,b)=>mastery(a)-mastery(b)).slice(0,5);let html=`<div class="statHero"><div class="heroBox"><div class="heroBig">${totalA?acc+'%':'—'}</div><div class="heroLabel">precisión histórica · ${totalA} intentos</div></div><div class="heroBox"><div class="recommend">${recommendation}</div></div></div><div class="sectionTitle">estado actual</div><div class="statRow"><div>Por repasar ahora</div><div></div><div class="pct">${due}</div></div><div class="statRow"><div>Débiles (&lt;55%)</div><div></div><div class="pct">${weak}</div></div><div class="statRow"><div>Listas para escribir</div><div></div><div class="pct">${typingReady}</div></div>`;if(scored.length){html+=`<div class="sectionTitle">tus 5 palabras más flojas</div>`+scored.map(c=>`<div class="statRow"><div class="wordName">${escapeHtml(c.en)} <span style="color:var(--muted)">· ${c.attempts} intentos</span></div><div class="miniBar"><i style="width:${mastery(c)}%"></i></div><div class="pct">${mastery(c)}%</div></div>`).join('')}html+=`<div class="sectionTitle">actividad · últimos 7 días</div><div class="week">`;const days=[];for(let i=6;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);const key=todayKey(d);let n=0;cards.forEach(c=>n+=(c.dayStats?.[key]?.attempts||0));days.push({d,n})}const mx=Math.max(1,...days.map(x=>x.n));html+=days.map(x=>`<div class="day"><div class="daybar" style="height:${Math.max(3,Math.round(x.n/mx*58))}px;opacity:${x.n?'.9':'.2'}"></div><div class="daylabel">${x.d.toLocaleDateString('es-PE',{weekday:'short'}).slice(0,2)}</div></div>`).join('')+`</div>`;box.innerHTML=html}
+function renderAll(){updateHeader();renderList();renderStats()}
+function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._x);t._x=setTimeout(()=>t.classList.remove('show'),1500)}
 load();
 </script>
 </body>
