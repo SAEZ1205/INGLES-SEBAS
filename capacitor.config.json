@@ -1,0 +1,8 @@
+{
+  "appId": "com.saez1205.inglessebas",
+  "appName": "Inglés Sebas",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  }
+}
