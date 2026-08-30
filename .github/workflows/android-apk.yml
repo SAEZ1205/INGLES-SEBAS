@@ -9,6 +9,7 @@ on:
       - 'index.html'
       - 'package.json'
       - 'capacitor.config.json'
+      - 'android-src/**'
       - '.github/workflows/android-apk.yml'
 
 permissions:
@@ -36,11 +37,15 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Prepare web assets
+      - name: Prepare offline web assets
         run: |
           rm -rf www
-          mkdir -p www
+          mkdir -p www/vendor
           cp index.html www/index.html
+          cp android-src/android-addon.js www/android-addon.js
+          cp -R node_modules/@fontsource/orbitron www/vendor/orbitron
+          cp -R node_modules/@fontsource/rajdhani www/vendor/rajdhani
+          cp -R node_modules/@fontsource/ibm-plex-mono www/vendor/ibm-plex-mono
 
       - name: Generate Android project
         run: npx cap add android
@@ -48,19 +53,43 @@ jobs:
       - name: Sync web app into Android
         run: npx cap sync android
 
-      - name: Build debug APK
+      - name: Install native Android activity
+        run: cp android-src/MainActivity.java android/app/src/main/java/com/saez1205/inglessebas/MainActivity.java
+
+      - name: Set Android app version
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          p=Path('android/app/build.gradle')
+          s=p.read_text()
+          s=re.sub(r'versionCode\s+\d+', 'versionCode 2', s)
+          s=re.sub(r'versionName\s+"[^"]+"', 'versionName "1.1.0"', s)
+          p.write_text(s)
+          PY
+
+      - name: Build release APK
         run: |
           cd android
           chmod +x gradlew
-          ./gradlew assembleDebug
+          ./gradlew assembleRelease
 
-      - name: Rename APK
-        run: cp android/app/build/outputs/apk/debug/app-debug.apk INGLES-SEBAS.apk
+      - name: Create stable signing identity
+        run: |
+          python3 -m pip install --quiet pycryptodome cryptography
+          python3 android-src/make_signing.py
+
+      - name: Sign and verify APK
+        run: |
+          BUILD_TOOLS=$(ls -1 "$ANDROID_HOME/build-tools" | sort -V | tail -1)
+          "$ANDROID_HOME/build-tools/$BUILD_TOOLS/zipalign" -f -p 4 android/app/build/outputs/apk/release/app-release-unsigned.apk INGLES-SEBAS-aligned.apk
+          "$ANDROID_HOME/build-tools/$BUILD_TOOLS/apksigner" sign --key /tmp/ingles-sebas-key.pem --cert /tmp/ingles-sebas-cert.pem --out INGLES-SEBAS-v1.1.0.apk INGLES-SEBAS-aligned.apk
+          "$ANDROID_HOME/build-tools/$BUILD_TOOLS/apksigner" verify --verbose --print-certs INGLES-SEBAS-v1.1.0.apk
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: INGLES-SEBAS-APK
-          path: INGLES-SEBAS.apk
+          name: INGLES-SEBAS-v1.1.0
+          path: INGLES-SEBAS-v1.1.0.apk
           if-no-files-found: error
           retention-days: 30
