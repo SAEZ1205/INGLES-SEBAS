@@ -83,7 +83,7 @@ jobs:
         run: |
           BUILD_TOOLS=$(ls -1 "$ANDROID_HOME/build-tools" | sort -V | tail -1)
           "$ANDROID_HOME/build-tools/$BUILD_TOOLS/zipalign" -f -p 4 android/app/build/outputs/apk/release/app-release-unsigned.apk INGLES-SEBAS-aligned.apk
-          "$ANDROID_HOME/build-tools/$BUILD_TOOLS/apksigner" sign --key /tmp/ingles-sebas-key.pem --cert /tmp/ingles-sebas-cert.pem --out INGLES-SEBAS-v1.1.0.apk INGLES-SEBAS-aligned.apk
+          "$ANDROID_HOME/build-tools/$BUILD_TOOLS/apksigner" sign --ks /tmp/ingles-sebas.p12 --ks-type PKCS12 --ks-pass pass:InglesSebasSideload2026 --key-pass pass:InglesSebasSideload2026 --out INGLES-SEBAS-v1.1.0.apk INGLES-SEBAS-aligned.apk
           "$ANDROID_HOME/build-tools/$BUILD_TOOLS/apksigner" verify --verbose --print-certs INGLES-SEBAS-v1.1.0.apk
 
       - name: Upload APK
