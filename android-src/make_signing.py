@@ -3,9 +3,11 @@ from Crypto.PublicKey import RSA
 from Crypto.Hash import SHAKE256
 from cryptography import x509
 from cryptography.hazmat.primitives import hashes, serialization
+from cryptography.hazmat.primitives.serialization import pkcs12
 from cryptography.x509.oid import NameOID
 
 seed = b'INGLES-SEBAS-SIDELOAD-SIGNING-V1-SAEZ1205-2026'
+password = b'InglesSebasSideload2026'
 shake = SHAKE256.new(data=seed)
 key = RSA.generate(2048, randfunc=lambda n: shake.read(n))
 pem = key.export_key(format='PEM', pkcs=8)
@@ -27,8 +29,14 @@ cert = (
     .sign(private_key, hashes.SHA256())
 )
 
-with open('/tmp/ingles-sebas-key.pem', 'wb') as f:
-    f.write(private_key.private_bytes(serialization.Encoding.PEM, serialization.PrivateFormat.PKCS8, serialization.NoEncryption()))
-with open('/tmp/ingles-sebas-cert.pem', 'wb') as f:
-    f.write(cert.public_bytes(serialization.Encoding.PEM))
+bundle = pkcs12.serialize_key_and_certificates(
+    name=b'ingles-sebas',
+    key=private_key,
+    cert=cert,
+    cas=None,
+    encryption_algorithm=serialization.BestAvailableEncryption(password),
+)
+with open('/tmp/ingles-sebas.p12', 'wb') as f:
+    f.write(bundle)
+
 print(cert.fingerprint(hashes.SHA256()).hex())
