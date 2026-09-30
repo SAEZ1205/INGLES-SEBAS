@@ -24,13 +24,13 @@
     if(!aside||document.getElementById('androidBackupPanel'))return;
     const panel=document.createElement('details');
     panel.className='panel';panel.id='androidBackupPanel';
-    panel.innerHTML='<summary>💾 copia de seguridad</summary><div class="panelBody"><div style="font-size:13px;line-height:1.3;color:var(--muted);margin-bottom:10px">Guarda tus palabras, progreso y estadísticas para recuperarlos si cambias de celular.</div><button class="add-btn" id="btnExportBackup">📤 exportar progreso</button><button class="add-btn" id="btnImportBackup" style="border-color:var(--magenta);color:var(--magenta)">📥 importar progreso</button><div style="text-align:center;font:9px IBM Plex Mono,monospace;color:var(--muted);margin-top:6px">INGLÉS SEBAS · Android v1.1.0</div></div>';
+    panel.innerHTML='<summary>💾 copia de seguridad</summary><div class="panelBody"><div style="font-size:13px;line-height:1.3;color:var(--muted);margin-bottom:10px">Guarda tus palabras, progreso y estadísticas para recuperarlos si cambias de celular.</div><button class="add-btn" id="btnExportBackup">📤 exportar progreso</button><button class="add-btn" id="btnImportBackup" style="border-color:var(--magenta);color:var(--magenta)">📥 importar progreso</button><div style="text-align:center;font:9px IBM Plex Mono,monospace;color:var(--muted);margin-top:6px">INGLÉS SEBAS · Android v2.0.0</div></div>';
     aside.appendChild(panel);
 
     document.getElementById('btnExportBackup').addEventListener('click',()=>{
       try{
         persistNow();
-        const payload=JSON.stringify({app:'INGLES-SEBAS',format:1,appVersion:'1.1.0',exportedAt:new Date().toISOString(),cards},null,2);
+        const payload=JSON.stringify({app:'INGLES-SEBAS',format:1,appVersion:'2.0.0',exportedAt:new Date().toISOString(),cards},null,2);
         const filename='ingles-sebas-backup-'+new Date().toISOString().slice(0,10)+'.json';
         if(window.AndroidNative&&window.AndroidNative.exportBackup){window.AndroidNative.exportBackup(payload,filename);return;}
         toast('Exportación no disponible');
