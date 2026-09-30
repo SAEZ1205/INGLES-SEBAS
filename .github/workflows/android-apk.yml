@@ -64,7 +64,7 @@ jobs:
           p=Path('android/app/src/main/AndroidManifest.xml')
           s=p.read_text()
           if 'android.permission.RECORD_AUDIO' not in s:
-              s=re.sub(r'(<manifest\\b[^>]*>)', r'\\1\n    <uses-permission android:name="android.permission.RECORD_AUDIO" />', s, count=1)
+              s=re.sub(r'(<manifest\b[^>]*>)', r'\1\n    <uses-permission android:name="android.permission.RECORD_AUDIO" />', s, count=1)
           s=re.sub(r'android:icon="[^"]+"', 'android:icon="@drawable/ic_ingles_sebas"', s)
           s=re.sub(r'android:roundIcon="[^"]+"', 'android:roundIcon="@drawable/ic_ingles_sebas"', s)
           p.write_text(s)
