@@ -64,9 +64,7 @@ jobs:
           p=Path('android/app/src/main/AndroidManifest.xml')
           s=p.read_text()
           if 'android.permission.RECORD_AUDIO' not in s:
-              s=s.replace('<manifest ', '<manifest ', 1)
-              pos=s.find('>')
-              s=s[:pos+1]+'\n    <uses-permission android:name="android.permission.RECORD_AUDIO" />'+s[pos+1:]
+              s=re.sub(r'(<manifest\\b[^>]*>)', r'\\1\n    <uses-permission android:name="android.permission.RECORD_AUDIO" />', s, count=1)
           s=re.sub(r'android:icon="[^"]+"', 'android:icon="@drawable/ic_ingles_sebas"', s)
           s=re.sub(r'android:roundIcon="[^"]+"', 'android:roundIcon="@drawable/ic_ingles_sebas"', s)
           p.write_text(s)
@@ -80,7 +78,7 @@ jobs:
           p=Path('android/app/build.gradle')
           s=p.read_text()
           s=re.sub(r'versionCode\s+\d+', 'versionCode 3', s)
-          s=re.sub(r'versionName\s+"[^"]+"', 'versionName "1.1.0"', s)
+          s=re.sub(r'versionName\s+"[^"]+"', 'versionName "2.0.0"', s)
           p.write_text(s)
           PY
 
