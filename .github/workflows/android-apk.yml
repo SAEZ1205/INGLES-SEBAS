@@ -53,8 +53,22 @@ jobs:
       - name: Sync web app into Android
         run: npx cap sync android
 
-      - name: Install native Android activity
-        run: cp android-src/MainActivity.java android/app/src/main/java/com/saez1205/inglessebas/MainActivity.java
+      - name: Install Android native additions
+        run: |
+          cp android-src/MainActivity.java android/app/src/main/java/com/saez1205/inglessebas/MainActivity.java
+          mkdir -p android/app/src/main/res/drawable
+          cp android-src/ic_ingles_sebas.xml android/app/src/main/res/drawable/ic_ingles_sebas.xml
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          p=Path('android/app/src/main/AndroidManifest.xml')
+          s=p.read_text()
+          if 'android.permission.RECORD_AUDIO' not in s:
+              s=re.sub(r'(<manifest\b[^>]*>)', r'\1\n    <uses-permission android:name="android.permission.RECORD_AUDIO" />', s, count=1)
+          s=re.sub(r'android:icon="[^"]+"', 'android:icon="@drawable/ic_ingles_sebas"', s)
+          s=re.sub(r'android:roundIcon="[^"]+"', 'android:roundIcon="@drawable/ic_ingles_sebas"', s)
+          p.write_text(s)
+          PY
 
       - name: Set Android app version
         run: |
@@ -63,8 +77,8 @@ jobs:
           import re
           p=Path('android/app/build.gradle')
           s=p.read_text()
-          s=re.sub(r'versionCode\s+\d+', 'versionCode 2', s)
-          s=re.sub(r'versionName\s+"[^"]+"', 'versionName "1.1.0"', s)
+          s=re.sub(r'versionCode\s+\d+', 'versionCode 3', s)
+          s=re.sub(r'versionName\s+"[^"]+"', 'versionName "2.0.0"', s)
           p.write_text(s)
           PY
 
@@ -83,13 +97,13 @@ jobs:
         run: |
           BUILD_TOOLS=$(ls -1 "$ANDROID_HOME/build-tools" | sort -V | tail -1)
           "$ANDROID_HOME/build-tools/$BUILD_TOOLS/zipalign" -f -p 4 android/app/build/outputs/apk/release/app-release-unsigned.apk INGLES-SEBAS-aligned.apk
-          "$ANDROID_HOME/build-tools/$BUILD_TOOLS/apksigner" sign --ks /tmp/ingles-sebas.p12 --ks-type PKCS12 --ks-pass pass:InglesSebasSideload2026 --key-pass pass:InglesSebasSideload2026 --out INGLES-SEBAS-v1.1.0.apk INGLES-SEBAS-aligned.apk
-          "$ANDROID_HOME/build-tools/$BUILD_TOOLS/apksigner" verify --verbose --print-certs INGLES-SEBAS-v1.1.0.apk
+          "$ANDROID_HOME/build-tools/$BUILD_TOOLS/apksigner" sign --ks /tmp/ingles-sebas.p12 --ks-type PKCS12 --ks-pass pass:InglesSebasSideload2026 --key-pass pass:InglesSebasSideload2026 --out INGLES-SEBAS-v2.0.0.apk INGLES-SEBAS-aligned.apk
+          "$ANDROID_HOME/build-tools/$BUILD_TOOLS/apksigner" verify --verbose --print-certs INGLES-SEBAS-v2.0.0.apk
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: INGLES-SEBAS-v1.1.0
-          path: INGLES-SEBAS-v1.1.0.apk
+          name: INGLES-SEBAS-v2.0.0
+          path: INGLES-SEBAS-v2.0.0.apk
           if-no-files-found: error
           retention-days: 30

@@ -3,6 +3,7 @@ package com.saez1205.inglessebas;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
@@ -16,18 +17,22 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class MainActivity extends BridgeActivity {
     private static final int REQUEST_EXPORT = 5011;
     private static final int REQUEST_IMPORT = 5012;
+    private static final int REQUEST_SPEECH = 5013;
     private TextToSpeech tts;
     private String pendingExport;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        tts = new TextToSpeech(this, status -> { if (status == TextToSpeech.SUCCESS) tts.setLanguage(Locale.US); });
+        tts = new TextToSpeech(this, status -> {
+            if (status == TextToSpeech.SUCCESS) tts.setLanguage(Locale.US);
+        });
         WebView webView = bridge.getWebView();
         webView.addJavascriptInterface(new AndroidNativeBridge(), "AndroidNative");
         webView.postDelayed(() -> injectAndroidRuntime(webView), 700);
@@ -45,21 +50,47 @@ public class MainActivity extends BridgeActivity {
             while ((n = in.read(buffer)) > 0) out.write(buffer, 0, n);
             in.close();
             webView.evaluateJavascript(out.toString("UTF-8"), null);
-        } catch (Exception e) { e.printStackTrace(); }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private class AndroidNativeBridge {
-        @JavascriptInterface public void speak(String text, double rate, double pitch) {
+        @JavascriptInterface
+        public void speak(String text, double rate, double pitch) {
             runOnUiThread(() -> {
                 if (tts == null || text == null || text.trim().isEmpty()) return;
                 tts.setLanguage(Locale.US);
-                tts.setSpeechRate((float)Math.max(0.5, Math.min(1.5, rate)));
-                tts.setPitch((float)Math.max(0.5, Math.min(1.5, pitch)));
+                tts.setSpeechRate((float) Math.max(0.5, Math.min(1.5, rate)));
+                tts.setPitch((float) Math.max(0.5, Math.min(1.5, pitch)));
                 tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, "ingles-sebas");
             });
         }
-        @JavascriptInterface public void stop() { runOnUiThread(() -> { if (tts != null) tts.stop(); }); }
-        @JavascriptInterface public void exportBackup(String contents, String filename) {
+
+        @JavascriptInterface
+        public void stop() {
+            runOnUiThread(() -> {
+                if (tts != null) tts.stop();
+            });
+        }
+
+        @JavascriptInterface
+        public void startSpeech(String lang) {
+            runOnUiThread(() -> {
+                try {
+                    Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, (lang == null || lang.isEmpty()) ? "es-PE" : lang);
+                    intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Habla ahora");
+                    startActivityForResult(intent, REQUEST_SPEECH);
+                } catch (Exception e) {
+                    Toast.makeText(MainActivity.this, "No hay reconocimiento de voz disponible", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+        @JavascriptInterface
+        public void exportBackup(String contents, String filename) {
             pendingExport = contents;
             runOnUiThread(() -> {
                 Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
@@ -69,7 +100,9 @@ public class MainActivity extends BridgeActivity {
                 startActivityForResult(intent, REQUEST_EXPORT);
             });
         }
-        @JavascriptInterface public void importBackup() {
+
+        @JavascriptInterface
+        public void importBackup() {
             runOnUiThread(() -> {
                 Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
@@ -82,6 +115,21 @@ public class MainActivity extends BridgeActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_SPEECH) {
+            if (resultCode == RESULT_OK && data != null) {
+                ArrayList<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                if (results != null && !results.isEmpty()) {
+                    String heard = results.get(0);
+                    bridge.getWebView().evaluateJavascript(
+                        "window.__receiveSpeechText && window.__receiveSpeechText(" + JSONObject.quote(heard) + ")",
+                        null
+                    );
+                }
+            }
+            return;
+        }
+
         if (resultCode != RESULT_OK || data == null || data.getData() == null) return;
         Uri uri = data.getData();
         try {
@@ -101,18 +149,24 @@ public class MainActivity extends BridgeActivity {
                 int n;
                 while ((n = in.read(buffer)) > 0) out.write(buffer, 0, n);
                 in.close();
-                String content = out.toString("UTF-8");
-                bridge.getWebView().evaluateJavascript("window.__receiveAndroidBackup(" + JSONObject.quote(content) + ")", null);
+                String fileContent = out.toString("UTF-8");
+                bridge.getWebView().evaluateJavascript(
+                    "window.__receiveAndroidBackup(" + JSONObject.quote(fileContent) + ")",
+                    null
+                );
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(this, "No se pudo procesar el backup", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "No se pudo procesar el archivo", Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
     public void onDestroy() {
-        if (tts != null) { tts.stop(); tts.shutdown(); }
+        if (tts != null) {
+            tts.stop();
+            tts.shutdown();
+        }
         super.onDestroy();
     }
 }

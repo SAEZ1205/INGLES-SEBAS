@@ -11,25 +11,167 @@
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;background:radial-gradient(circle at 10% 0%,rgba(61,242,255,.08),transparent 42%),radial-gradient(circle at 90% 12%,rgba(255,61,190,.07),transparent 40%),var(--bg);font-family:'Rajdhani',sans-serif;color:var(--text);padding:20px 12px calc(38px + env(safe-area-inset-bottom));display:flex;justify-content:center}.app{width:100%;max-width:520px}.topbar{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:2px 2px 14px}.topbar h1{font-family:'Orbitron',sans-serif;font-size:20px;letter-spacing:.08em;color:var(--cyan);margin:0;text-shadow:0 0 14px rgba(61,242,255,.35)}.subtitle{font:11px 'IBM Plex Mono',monospace;color:var(--muted);margin-top:5px}.count{font:11px 'IBM Plex Mono',monospace;color:var(--muted);white-space:nowrap}.progress-track{height:5px;background:var(--line);border-radius:99px;overflow:hidden;margin-bottom:14px}.progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--magenta));transition:width .2s ease}.quickstats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:14px}.qstat{background:rgba(20,27,44,.82);border:1px solid var(--line);border-radius:10px;padding:9px 8px;text-align:center}.qnum{font:700 16px 'Orbitron',sans-serif;color:var(--text)}.qlabel{font:9px 'IBM Plex Mono',monospace;color:var(--muted);text-transform:uppercase;margin-top:3px}.stage{position:relative;height:320px;margin-bottom:12px}.stack{position:absolute;inset:0;background:var(--bg2);border:1px solid var(--line);border-radius:16px;transform:translateY(9px) scale(.965)}.stack.s2{transform:translateY(17px) scale(.93);opacity:.55}.card{position:absolute;inset:0;perspective:1200px;cursor:pointer;user-select:none}.card-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .28s cubic-bezier(.2,.8,.2,1)}.card.flipped .card-inner{transform:rotateY(180deg)}.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:16px;background:linear-gradient(160deg,#161f33,#111827);border:1px solid var(--cyan);box-shadow:0 0 20px rgba(61,242,255,.13),var(--shadow);padding:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}.face-back{transform:rotateY(180deg);border-color:var(--magenta);box-shadow:0 0 20px rgba(255,61,190,.12),var(--shadow)}.eyebrow{font:10px 'IBM Plex Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);margin-bottom:12px}.face-back .eyebrow{color:var(--magenta)}.word{font:600 clamp(22px,7vw,30px) 'Orbitron',sans-serif;line-height:1.22;overflow-wrap:anywhere}.hint{font:10px 'IBM Plex Mono',monospace;color:var(--muted);margin-top:14px}.example{width:100%;margin-top:18px;padding-top:14px;border-top:1px solid var(--line);font-size:16px;line-height:1.25}.example .es{color:var(--muted);font-size:13px;margin-top:6px}.speaker{position:absolute;right:13px;top:13px;z-index:5;width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:rgba(10,13,22,.72);color:var(--cyan);font-size:18px;display:grid;place-items:center;cursor:pointer}.speaker:active{transform:scale(.95)}.typingBox{display:none;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px;margin-bottom:10px}.typingBox.active{display:block}.typingLabel{font:10px 'IBM Plex Mono',monospace;color:var(--yellow);text-transform:uppercase;margin-bottom:7px}.typingRow{display:flex;gap:7px}.typingRow input{flex:1;min-width:0;background:var(--bg2);color:var(--text);border:1px solid var(--line);border-radius:9px;padding:12px;font-size:16px;font-family:'Rajdhani',sans-serif}.typingRow input:focus{outline:none;border-color:var(--cyan)}.checkBtn{border:1px solid var(--cyan);background:var(--bg2);color:var(--cyan);border-radius:9px;padding:0 14px;font-weight:700}.typingFeedback{min-height:16px;font:10px 'IBM Plex Mono',monospace;margin-top:6px}.rating{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:9px}.rate{min-height:50px;border-radius:10px;background:var(--panel);font-family:'Rajdhani',sans-serif;font-weight:700;border:1px solid var(--line);font-size:12px;color:var(--text);cursor:pointer;padding:7px 3px}.rate span{display:block;font:9px 'IBM Plex Mono',monospace;margin-top:2px;opacity:.7}.rate.again{color:var(--red);border-color:rgba(255,59,78,.65)}.rate.hard{color:var(--orange);border-color:rgba(255,159,67,.65)}.rate.good{color:var(--green);border-color:rgba(57,255,136,.65)}.rate.easy{color:var(--cyan);border-color:rgba(61,242,255,.65)}.rate:active,.control:active,.add-btn:active{transform:scale(.98)}.controls{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:14px}.control{border:1px solid var(--line);background:var(--panel);color:var(--muted);border-radius:10px;min-height:43px;font-family:'Rajdhani',sans-serif;font-weight:600;cursor:pointer}.layout{display:block}.panel{margin-top:9px;border:1px solid var(--line);background:rgba(20,27,44,.72);border-radius:12px;overflow:hidden}.panel summary{cursor:pointer;list-style:none;padding:14px;font:11px 'IBM Plex Mono',monospace;color:var(--muted);text-transform:uppercase}.panel summary::-webkit-details-marker{display:none}.panel[open] summary{color:var(--cyan);border-bottom:1px solid var(--line)}.panelBody{padding:14px}.statHero{display:grid;grid-template-columns:1.15fr .85fr;gap:8px;margin-bottom:12px}.heroBox{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:12px}.heroBig{font:800 23px 'Orbitron',sans-serif;color:var(--cyan)}.heroLabel{font:10px 'IBM Plex Mono',monospace;color:var(--muted);margin-top:4px}.recommend{font-size:14px;line-height:1.25}.sectionTitle{font:10px 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.08em;margin:14px 0 7px;color:var(--muted)}.statRow{display:grid;grid-template-columns:minmax(0,1fr) 62px 48px;gap:8px;align-items:center;padding:7px 0;border-bottom:1px solid var(--line);font-size:13px}.statRow .wordName{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.miniBar{height:5px;background:var(--line);border-radius:9px;overflow:hidden}.miniBar>i{display:block;height:100%;background:linear-gradient(90deg,var(--red),var(--green))}.pct{font:10px 'IBM Plex Mono',monospace;text-align:right;color:var(--muted)}.week{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;align-items:end;height:82px;padding-top:8px}.day{display:flex;height:100%;flex-direction:column;justify-content:end;align-items:center;gap:4px}.daybar{width:100%;max-width:24px;min-height:3px;border-radius:5px 5px 2px 2px;background:linear-gradient(180deg,var(--cyan),var(--magenta));opacity:.85}.daylabel{font:8px 'IBM Plex Mono',monospace;color:var(--muted)}.form-row{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:7px}.form-row input{min-width:0;background:var(--bg2);color:var(--text);border:1px solid var(--line);border-radius:9px;padding:11px;font-family:'Rajdhani',sans-serif}.form-row input:focus{outline:none;border-color:var(--cyan)}.add-btn{width:100%;min-height:42px;border:1px solid var(--cyan);background:var(--bg2);color:var(--cyan);border-radius:9px;font-weight:700;margin-bottom:10px}.list{max-height:310px;overflow:auto}.list-item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}.li-words{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:13px}.li-es{color:var(--muted);margin-left:5px}.li-meta{font:9px 'IBM Plex Mono',monospace;color:var(--muted);margin-top:2px}.li-right{display:flex;align-items:center;gap:7px}.dots{display:flex;gap:3px}.dot{width:7px;height:7px;border-radius:50%;background:var(--line)}.dot.r{background:var(--red)}.dot.y{background:var(--orange)}.dot.g{background:var(--green)}.dot.e{background:var(--cyan)}.li-del{border:0;background:none;color:var(--muted);font-size:18px;cursor:pointer}.empty{text-align:center;color:var(--muted);font-size:13px;padding:20px 6px}.toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));transform:translate(-50%,20px);background:#101827;border:1px solid var(--line);border-radius:9px;padding:9px 12px;font:11px 'IBM Plex Mono',monospace;color:var(--text);opacity:0;pointer-events:none;transition:.2s;z-index:50}.toast.show{opacity:1;transform:translate(-50%,0)}
 @media(min-width:820px){body{padding:42px 20px}.app{max-width:920px}.layout{display:grid;grid-template-columns:390px 1fr;gap:26px;align-items:start}.stage{height:350px}.side .panel{margin-top:0;margin-bottom:14px}.topbar h1{font-size:26px}.quickstats{max-width:390px}.study{position:sticky;top:24px}}
 @media(max-width:380px){.stage{height:300px}.rate{font-size:11px}.word{font-size:21px}.example{font-size:14px}.qnum{font-size:14px}}
+
+/* ===== INGLÉS SEBAS v2 · Guinda / UNI-inspired ===== */
+:root{
+  --bg:#10080B;--bg2:#180D12;--panel:#211219;--line:#442530;
+  --cyan:#FF496B;--magenta:#D7AB61;--green:#58D68D;--yellow:#F3C96B;
+  --orange:#E88C5A;--red:#FF496B;--text:#FFF7F8;--muted:#B698A2;
+  --uni:#7A001E;--uni2:#A80C35;--cream:#FFF3E7;--shadow:0 16px 42px rgba(0,0,0,.36)
+}
+body{background:
+  radial-gradient(circle at 12% 0%,rgba(168,12,53,.30),transparent 38%),
+  radial-gradient(circle at 95% 18%,rgba(215,171,97,.10),transparent 32%),
+  linear-gradient(180deg,#13080C 0%,#0D0709 100%);padding-top:14px}
+.app{max-width:980px}
+.topbar{align-items:center;margin-bottom:11px}
+.brandWrap{display:flex;align-items:center;gap:10px;min-width:0}
+.brandLogo{width:46px;height:46px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(145deg,#B20E3B,#630016);border:1px solid rgba(255,255,255,.13);box-shadow:0 8px 26px rgba(122,0,30,.45);overflow:hidden;flex:none}
+.brandLogo svg{width:42px;height:42px}
+.topbar h1{color:var(--cream);font-size:19px;text-shadow:none;letter-spacing:.06em}
+.subtitle{color:#D7B8C1}
+.navTabs{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:0 0 14px;background:rgba(24,13,18,.88);padding:6px;border:1px solid var(--line);border-radius:14px;position:sticky;top:7px;z-index:35;backdrop-filter:blur(14px);box-shadow:0 10px 28px rgba(0,0,0,.22)}
+.navBtn{border:0;background:transparent;color:var(--muted);border-radius:10px;min-height:46px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;cursor:pointer;padding:5px 3px}
+.navBtn b{display:block;font-size:17px;line-height:16px;margin-bottom:3px}
+.navBtn.active{color:#fff;background:linear-gradient(135deg,var(--uni2),var(--uni));box-shadow:0 7px 18px rgba(122,0,30,.34)}
+.appView{display:none}.appView.active{display:block}
+.face{background:linear-gradient(155deg,#28131C,#160D11);border-color:#C51B46;box-shadow:0 0 24px rgba(168,12,53,.20),var(--shadow)}
+.face-back{border-color:#D7AB61;box-shadow:0 0 20px rgba(215,171,97,.13),var(--shadow)}
+.eyebrow{color:#FF6A87}.face-back .eyebrow{color:#E7C987}
+.progress-fill,.daybar{background:linear-gradient(90deg,#8A0022,#E02A55,#D7AB61)}
+.rate.easy{color:#E8C67E;border-color:rgba(215,171,97,.65)}
+.panel[open] summary,.heroBig{color:#FF627F}
+.pron-line{min-height:18px;margin-top:8px;color:#E7C987;font:11px 'IBM Plex Mono',monospace;letter-spacing:.02em}
+.fastHint{font-size:12px;line-height:1.3;color:var(--muted);margin-bottom:9px}
+.aiMiniBtn{border:1px solid rgba(215,171,97,.65);background:#1A0E13;color:#E7C987;border-radius:9px;font-family:'Rajdhani',sans-serif;font-weight:700;min-height:42px;padding:0 9px;cursor:pointer}
+.viewTitle{margin:5px 2px 12px}.viewTitle h2{margin:0;font:800 21px 'Orbitron',sans-serif;color:var(--cream);letter-spacing:.03em}.viewTitle p{margin:5px 0 0;color:var(--muted);font-size:14px}
+.aiCard{background:linear-gradient(160deg,rgba(38,19,27,.98),rgba(20,11,15,.98));border:1px solid var(--line);border-radius:17px;padding:15px;box-shadow:var(--shadow);margin-bottom:12px}
+.inputArea{width:100%;resize:vertical;min-height:88px;background:#130A0E;color:var(--text);border:1px solid var(--line);border-radius:12px;padding:13px;font:16px 'Rajdhani',sans-serif;outline:none}
+.inputArea:focus,.chatInput:focus{border-color:#B91B45;box-shadow:0 0 0 3px rgba(185,27,69,.12)}
+.actionRow{display:flex;gap:8px;margin-top:9px;flex-wrap:wrap}
+.primaryBtn,.ghostBtn,.micBtn{border-radius:11px;min-height:44px;padding:0 14px;font-family:'Rajdhani',sans-serif;font-weight:700;cursor:pointer}
+.primaryBtn{border:1px solid #CC204B;background:linear-gradient(135deg,#A80C35,#72001D);color:white;flex:1}
+.ghostBtn{border:1px solid var(--line);background:#160D11;color:var(--muted)}
+.micBtn{width:50px;padding:0;border:1px solid #D7AB61;background:#190E12;color:#F0CE88;font-size:20px}
+.aiStatus{font:10px 'IBM Plex Mono',monospace;color:var(--muted);margin-top:9px;min-height:15px}
+.translationResult{display:none}.translationResult.show{display:block}
+.trBlock{border:1px solid var(--line);background:#130A0E;border-radius:13px;padding:13px;margin-top:9px}
+.trLabel{font:9px 'IBM Plex Mono',monospace;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px}
+.trMain{font-size:20px;font-weight:700;line-height:1.18}.trPron{color:#E7C987;font:13px 'IBM Plex Mono',monospace;line-height:1.35}.trSpanish{font-size:17px}
+.toneBadge{display:inline-flex;margin-top:10px;border:1px solid rgba(215,171,97,.45);color:#E7C987;background:rgba(215,171,97,.06);padding:5px 8px;border-radius:99px;font:9px 'IBM Plex Mono',monospace;text-transform:uppercase}
+.keywordWrap{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}.keyword{border:1px solid var(--line);background:#180E12;color:var(--text);border-radius:9px;padding:7px 9px;font-size:12px;cursor:pointer}.keyword small{display:block;color:var(--muted)}
+.buddyHead{display:flex;align-items:center;gap:11px}.buddyAvatar{width:48px;height:48px;border-radius:16px;background:linear-gradient(145deg,#C81949,#650019);display:grid;place-items:center;font-size:24px;box-shadow:0 8px 20px rgba(122,0,30,.38)}.buddyName{font-weight:800;font-size:18px}.buddySub{font-size:12px;color:var(--muted)}
+.memoryPill{margin-left:auto;max-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border:1px solid var(--line);border-radius:99px;padding:6px 8px;font:9px 'IBM Plex Mono',monospace;color:#D8BBC4}
+.chatMessages{height:min(53vh,470px);min-height:330px;overflow:auto;padding:5px 1px 10px;display:flex;flex-direction:column;gap:9px}
+.msg{max-width:88%;padding:10px 12px;border-radius:14px;line-height:1.3;font-size:15px}.msg.user{align-self:flex-end;background:linear-gradient(135deg,#8F082D,#650019);border-bottom-right-radius:4px}.msg.assistant{align-self:flex-start;background:#21131A;border:1px solid var(--line);border-bottom-left-radius:4px}.msgMeta{font:8px 'IBM Plex Mono',monospace;color:rgba(255,255,255,.55);margin-bottom:4px;text-transform:uppercase}.correction{margin-top:8px;border-top:1px solid var(--line);padding-top:8px;color:#F2D99F;font-size:12px}.correction b{color:#fff}.chatComposer{display:grid;grid-template-columns:46px 1fr 48px;gap:7px;align-items:end}.chatInput{min-height:46px;max-height:105px;resize:none;background:#130A0E;color:var(--text);border:1px solid var(--line);border-radius:12px;padding:12px;font:15px 'Rajdhani',sans-serif;outline:none}.sendBtn{height:46px;border:0;border-radius:12px;background:linear-gradient(135deg,#BC1745,#72001D);color:#fff;font-size:18px;cursor:pointer}
+.wordChip{display:inline-block;margin:6px 5px 0 0;padding:5px 7px;border-radius:8px;border:1px solid rgba(215,171,97,.32);color:#E7C987;font-size:11px;background:rgba(215,171,97,.05);cursor:pointer}
+.statCards{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:12px}.bigStat{background:#150B0F;border:1px solid var(--line);border-radius:13px;padding:12px}.bigStat strong{display:block;font:800 21px 'Orbitron',sans-serif;color:#FF6783}.bigStat span{font:9px 'IBM Plex Mono',monospace;color:var(--muted);text-transform:uppercase}
+.fullStats .week{height:110px}.fullStats .daybar{max-width:34px}
+.emptyBuddy{text-align:center;color:var(--muted);padding:34px 18px;font-size:14px;line-height:1.35}
+.loadingDots:after{content:'…';animation:dots 1s steps(4,end) infinite}@keyframes dots{0%{content:''}25%{content:'.'}50%{content:'..'}75%,100%{content:'...'}}
+@media(max-width:520px){.navBtn{font-size:10px}.navBtn b{font-size:16px}.brandLogo{width:42px;height:42px}.topbar h1{font-size:16px}.count{font-size:9px}.aiCard{padding:12px}.memoryPill{display:none}.trMain{font-size:18px}}
 </style>
 </head>
 <body>
 <div class="app">
-  <div class="topbar"><div><h1>VOCABULARIO</h1><div class="subtitle">smart review · móvil primero</div></div><div class="count" id="counter">0 / 0</div></div>
+  <div class="topbar">
+    <div class="brandWrap">
+      <div class="brandLogo" aria-hidden="true">
+        <svg viewBox="0 0 108 108">
+          <path fill="#D51C45" d="M22 38 8 31l12 17-13 3 14 9c0 17 13 28 31 29 18 1 32-9 35-24 3-15-6-27-20-32-12-4-28-2-45 5Z"/>
+          <path fill="#FFF8F2" d="M48 39c7-6 20-5 27 3 4 5 3 13-2 16-6 3-13 0-17-5-4-4-7-8-8-14Z"/>
+          <circle cx="65" cy="47" r="7" fill="#16090C"/>
+          <path fill="#E6B66A" d="M55 58c13-3 25 3 26 12 1 10-9 16-23 15-14-1-23-7-22-16 1-6 9-10 19-11Z"/>
+          <path fill="#FFF8F2" d="M50 68h16l-5 5h11L58 83l3-7H48Z"/>
+        </svg>
+      </div>
+      <div><h1>INGLÉS SEBAS</h1><div class="subtitle">smart english · v2</div></div>
+    </div>
+    <div class="count" id="counter">0 / 0</div>
+  </div>
+  <nav class="navTabs" aria-label="Secciones">
+    <button class="navBtn active" data-view="study"><b>◆</b>Estudiar</button>
+    <button class="navBtn" data-view="translate"><b>↔</b>Traducir</button>
+    <button class="navBtn" data-view="chat"><b>✦</b>Buddy IA</button>
+    <button class="navBtn" data-view="stats"><b>▥</b>Progreso</button>
+  </nav>
+  <section class="appView active" id="studyView">
   <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
   <div class="quickstats"><div class="qstat"><div class="qnum" id="qDue">0</div><div class="qlabel">por repasar</div></div><div class="qstat"><div class="qnum" id="qToday">0</div><div class="qlabel">hoy</div></div><div class="qstat"><div class="qnum" id="qAcc">—</div><div class="qlabel">precisión</div></div></div>
   <div class="layout">
     <main class="study">
-      <div class="stage"><div class="stack s2"></div><div class="stack"></div><div class="card" id="card"><button class="speaker" id="speaker" aria-label="Pronunciar">🔊</button><div class="card-inner"><section class="face face-front"><div class="eyebrow" id="frontLabel">Inglés</div><div class="word" id="frontWord">—</div><div class="hint" id="frontHint">toca para voltear</div></section><section class="face face-back"><div class="eyebrow" id="backLabel">Español</div><div class="word" id="backWord">—</div><div class="example" id="exampleBox"></div><div class="hint">toca para volver</div></section></div></div></div>
+      <div class="stage"><div class="stack s2"></div><div class="stack"></div><div class="card" id="card"><button class="speaker" id="speaker" aria-label="Pronunciar">🔊</button><div class="card-inner"><section class="face face-front"><div class="eyebrow" id="frontLabel">Inglés</div><div class="word" id="frontWord">—</div><div class="pron-line" id="frontPron"></div><div class="hint" id="frontHint">toca para voltear</div></section><section class="face face-back"><div class="eyebrow" id="backLabel">Español</div><div class="word" id="backWord">—</div><div class="pron-line" id="backPron"></div><div class="example" id="exampleBox"></div><div class="hint">toca para volver</div></section></div></div></div>
       <div class="typingBox" id="typingBox"><div class="typingLabel">✍ reto activo · escribe la palabra en inglés</div><div class="typingRow"><input id="typingInput" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Escribe aquí…"><button class="checkBtn" id="checkBtn">OK</button></div><div class="typingFeedback" id="typingFeedback"></div></div>
       <div class="rating"><button class="rate again" data-rate="again">✕ Otra vez<span>~1 min</span></button><button class="rate hard" data-rate="hard">△ Difícil<span>~10 min</span></button><button class="rate good" data-rate="good">✓ Bien<span>mañana+</span></button><button class="rate easy" data-rate="easy">⚡ Fácil<span>más tarde</span></button></div>
       <div class="controls"><button class="control" id="btnDir">⇄ EN → ES</button><button class="control" id="btnShuffle">⤮ mezclar sesión</button></div>
     </main>
     <aside class="side">
       <details class="panel" open><summary>⚡ estadísticas útiles</summary><div class="panelBody" id="statsBox"></div></details>
-      <details class="panel"><summary>+ agregar / administrar palabras</summary><div class="panelBody"><div class="form-row"><input id="inputEn" placeholder="inglés"><input id="inputEs" placeholder="español"></div><div class="form-row"><input id="inputEx" placeholder="ejemplo en inglés (opcional)"><input id="inputExEs" placeholder="traducción (opcional)"></div><button class="add-btn" id="btnAdd">añadir palabra</button><div class="list" id="wordList"></div></div></details>
+      <details class="panel"><summary>+ agregar / administrar palabras</summary><div class="panelBody">
+        <div class="fastHint">Puedes escribir solo inglés o español y usar <b>✨ completar con IA</b>. También puedes llenar todo manualmente.</div>
+        <div class="form-row"><input id="inputEn" placeholder="inglés"><input id="inputEs" placeholder="español"></div>
+        <div class="form-row"><input id="inputPron" placeholder="cómo suena (opcional)"><button class="aiMiniBtn" id="btnAutoFill">✨ completar con IA</button></div>
+        <div class="form-row"><input id="inputEx" placeholder="ejemplo en inglés (opcional)"><input id="inputExEs" placeholder="traducción (opcional)"></div>
+        <button class="add-btn" id="btnAdd">añadir palabra</button><div class="list" id="wordList"></div>
+      </div></details>
     </aside>
   </div>
+
+  </section>
+
+  <section class="appView" id="translateView">
+    <div class="viewTitle"><h2>¿CÓMO SE DICE?</h2><p>Dilo como realmente lo diría alguien en inglés.</p></div>
+    <div class="aiCard">
+      <textarea class="inputArea" id="translateInput" placeholder="Escribe en español… Ej.: me quedé dormido y llegué tarde"></textarea>
+      <div class="actionRow">
+        <button class="micBtn" id="translateMic" aria-label="Hablar">🎙</button>
+        <button class="primaryBtn" id="translateBtn">Traducir con IA</button>
+      </div>
+      <div class="aiStatus" id="translateStatus"></div>
+    </div>
+    <div class="aiCard translationResult" id="translateResult">
+      <div class="trBlock"><div class="trLabel">🇺🇸 Inglés natural</div><div class="trMain" id="trEnglish"></div></div>
+      <div class="trBlock"><div class="trLabel">🗣 Cómo suena</div><div class="trPron" id="trPron"></div></div>
+      <div class="trBlock"><div class="trLabel">🇵🇪 Español</div><div class="trSpanish" id="trSpanish"></div></div>
+      <span class="toneBadge" id="trTone"></span>
+      <div class="fastHint" id="trNote" style="margin-top:9px"></div>
+      <div class="keywordWrap" id="trKeywords"></div>
+      <div class="actionRow">
+        <button class="ghostBtn" id="trSpeak">🔊 escuchar</button>
+        <button class="primaryBtn" id="trSave">＋ guardar frase</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="appView" id="chatView">
+    <div class="viewTitle"><h2>BUDDY IA</h2><p>Tu pata en inglés. Usa tus palabras, recuerda el contexto y te corrige sin cortar la conversa.</p></div>
+    <div class="aiCard">
+      <div class="buddyHead">
+        <div class="buddyAvatar">⚡</div>
+        <div><div class="buddyName">Buddy</div><div class="buddySub">English buddy · aprende contigo</div></div>
+        <div class="memoryPill" id="buddyMemoryPill">memoria local</div>
+      </div>
+    </div>
+    <div class="aiCard">
+      <div class="chatMessages" id="chatMessages"></div>
+      <div class="chatComposer">
+        <button class="micBtn" id="chatMic" aria-label="Hablar">🎙</button>
+        <textarea class="chatInput" id="chatInput" rows="1" placeholder="Tell me something…"></textarea>
+        <button class="sendBtn" id="chatSend">➤</button>
+      </div>
+      <div class="aiStatus" id="chatStatus"></div>
+      <div class="actionRow">
+        <button class="ghostBtn" id="btnClearChat">limpiar chat</button>
+        <button class="ghostBtn" id="btnForgetMemory">olvidar memoria de Buddy</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="appView" id="statsView">
+    <div class="viewTitle"><h2>MI PROGRESO</h2><p>Lo útil: qué dominas, qué se te cae y cuánto estás practicando.</p></div>
+    <div class="aiCard fullStats" id="statsFullBox"></div>
+  </section>
+
 </div>
 <div class="toast" id="toast"></div>
 <script>
@@ -44,7 +186,7 @@ function uid(){return (crypto.randomUUID?.()||Math.random().toString(36).slice(2
 function todayKey(d=new Date()){return d.toLocaleDateString('en-CA')}
 function normalizeText(s){return s.toLowerCase().trim().replace(/[’‘]/g,"'").replace(/\s+/g,' ').normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
 function escapeHtml(s){const d=document.createElement('div');d.textContent=s??'';return d.innerHTML}
-function baseCard(en,es,ex='',exEs=''){return{id:uid(),en,es,example:ex,exampleEs:exEs,history:[],rounds:0,totalKnown:0,totalReview:0,attempts:0,streak:0,ease:2.3,intervalDays:0,dueAt:0,lastSeen:0,updatedAt:Date.now(),dayStats:{}}}
+function baseCard(en,es,ex='',exEs='',pronunciation=''){return{id:uid(),en,es,pronunciation,example:ex,exampleEs:exEs,history:[],rounds:0,totalKnown:0,totalReview:0,attempts:0,streak:0,ease:2.3,intervalDays:0,dueAt:0,lastSeen:0,updatedAt:Date.now(),dayStats:{}}}
 function migrate(c){const x={...baseCard(c.en,c.es,c.example||'',c.exampleEs||''),...c};x.history=Array.isArray(c.history)?c.history.slice(-20):[];x.dayStats=c.dayStats||{};x.attempts=Number.isFinite(c.attempts)?c.attempts:(c.totalKnown||0)+(c.totalReview||0);x.dueAt=Number.isFinite(c.dueAt)?c.dueAt:0;x.ease=Number.isFinite(c.ease)?c.ease:2.3;x.intervalDays=Number.isFinite(c.intervalDays)?c.intervalDays:0;x.streak=Number.isFinite(c.streak)?c.streak:0;return x}
 function load(){try{cards=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]').map(migrate)}catch{cards=[]}const existing=new Set(cards.map(c=>c.en.toLowerCase()));for(const [en,es,ex,exEs] of seed){if(!existing.has(en.toLowerCase())){cards.push(baseCard(en,es,ex,exEs));existing.add(en.toLowerCase())}else{const c=cards.find(x=>x.en.toLowerCase()===en.toLowerCase());if(c&&!c.example){c.example=ex;c.exampleEs=exEs}}}persistNow();buildQueue();renderAll();showNext()}
 function persistNow(){localStorage.setItem(STORAGE_KEY,JSON.stringify(cards))}
@@ -55,7 +197,7 @@ function buildQueue(){const now=Date.now();const due=cards.filter(c=>(c.dueAt||0
 function mastery(c){if(!c.attempts)return 0;const acc=(c.totalKnown||0)/Math.max(1,c.attempts);const streak=Math.min(c.streak||0,4)/4;return Math.round((acc*.72+streak*.28)*100)}
 function shouldType(c){const m=mastery(c);return direction==='en-es'&&c.attempts>=3&&m>=55&&m<88&&(c.attempts%3===1||Math.random()<.3)}
 function showNext(){flipped=false;typingLocked=false;$('card').classList.remove('flipped');$('typingFeedback').textContent='';if(!cards.length){current=null;$('frontWord').textContent='sin tarjetas';return}while(queue.length&& !cards.some(c=>c.id===queue[0]))queue.shift();if(!queue.length){buildQueue()}current=cards.find(c=>c.id===queue[0])||cards[0];typingMode=shouldType(current);$('typingBox').classList.toggle('active',typingMode);$('typingInput').value='';if(typingMode)setTimeout(()=>$('typingInput').focus({preventScroll:true}),120);renderCard();renderAll()}
-function renderCard(){if(!current)return;const frontIsEn=typingMode?false:direction==='en-es';$('frontLabel').textContent=frontIsEn?'Inglés':'Español';$('backLabel').textContent=frontIsEn?'Español':'Inglés';$('frontWord').textContent=frontIsEn?current.en:current.es;$('backWord').textContent=frontIsEn?current.es:current.en;$('frontHint').textContent=typingMode?'escríbela abajo para comprobar':'toca para voltear';const ex=current.example||`I am learning the word “${current.en}”.`;const exEs=current.exampleEs||'';$('exampleBox').innerHTML=`<div>${escapeHtml(ex)}</div>${exEs?`<div class="es">${escapeHtml(exEs)}</div>`:''}`}
+function renderCard(){if(!current)return;const frontIsEn=typingMode?false:direction==='en-es';$('frontLabel').textContent=frontIsEn?'Inglés':'Español';$('backLabel').textContent=frontIsEn?'Español':'Inglés';$('frontWord').textContent=frontIsEn?current.en:current.es;$('backWord').textContent=frontIsEn?current.es:current.en;$('frontPron').textContent=frontIsEn?(current.pronunciation||''):'';$('backPron').textContent=frontIsEn?'':(current.pronunciation||'');$('frontHint').textContent=typingMode?'escríbela abajo para comprobar':'toca para voltear';const ex=current.example||`I am learning the word “${current.en}”.`;const exEs=current.exampleEs||'';$('exampleBox').innerHTML=`<div>${escapeHtml(ex)}</div>${exEs?`<div class="es">${escapeHtml(exEs)}</div>`:''}`}
 function updateHeader(){const due=cards.filter(c=>(c.dueAt||0)<=Date.now()).length;const today=todayKey();let a=0,k=0;cards.forEach(c=>{const s=c.dayStats?.[today];if(s){a+=s.attempts||0;k+=s.known||0}});$('qDue').textContent=due;$('qToday').textContent=a;$('qAcc').textContent=a?Math.round(k/a*100)+'%':'—';$('counter').textContent=`${sessionSeen.size} / ${cards.length}`;$('progressFill').style.width=(cards.length?Math.min(100,sessionSeen.size/cards.length*100):0)+'%'}
 function reschedule(c,rate){const now=Date.now();c.attempts=(c.attempts||0)+1;c.lastSeen=now;c.updatedAt=now;let mark='r';if(rate==='again'){c.totalReview++;c.streak=0;c.ease=Math.max(1.5,c.ease-.2);c.intervalDays=0;c.dueAt=now+60*1000;mark='r'}else if(rate==='hard'){c.totalReview++;c.streak=Math.max(0,c.streak-1);c.ease=Math.max(1.5,c.ease-.08);c.intervalDays=Math.max(.007,Math.min(1,(c.intervalDays||0)*1.2||.007));c.dueAt=now+10*60*1000;mark='y'}else if(rate==='good'){c.totalKnown++;c.streak++;c.ease=Math.min(3,c.ease+.03);c.intervalDays=c.intervalDays?Math.max(1,Math.round(c.intervalDays*c.ease)):1;c.dueAt=now+c.intervalDays*86400000;mark='g'}else{c.totalKnown++;c.streak++;c.ease=Math.min(3.2,c.ease+.12);c.intervalDays=c.intervalDays?Math.max(3,Math.round(c.intervalDays*(c.ease+.55))):3;c.dueAt=now+c.intervalDays*86400000;mark='e'}c.history.push(mark);c.history=c.history.slice(-20);if(c.attempts%5===0)c.rounds=(c.rounds||0)+1;const day=todayKey();c.dayStats[day]=c.dayStats[day]||{attempts:0,known:0};c.dayStats[day].attempts++;if(rate==='good'||rate==='easy')c.dayStats[day].known++;}
 function rateCurrent(rate){if(!current)return;reschedule(current,rate);sessionSeen.add(current.id);const id=queue.shift();if(rate==='again')queue.splice(Math.min(2,queue.length),0,id);else if(rate==='hard')queue.splice(Math.min(5,queue.length),0,id);scheduleSave();renderAll();showNext()}
@@ -67,12 +209,213 @@ function checkTyping(){if(!typingMode||!current)return;const ans=$('typingInput'
 $('checkBtn').addEventListener('click',checkTyping);$('typingInput').addEventListener('keydown',e=>{if(e.key==='Enter')checkTyping()});
 $('btnDir').addEventListener('click',()=>{direction=direction==='en-es'?'es-en':'en-es';$('btnDir').textContent=direction==='en-es'?'⇄ EN → ES':'⇄ ES → EN';typingMode=false;$('typingBox').classList.remove('active');flipped=false;$('card').classList.remove('flipped');renderCard()});
 $('btnShuffle').addEventListener('click',()=>{buildQueue();for(let i=queue.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[queue[i],queue[j]]=[queue[j],queue[i]]}showNext();toast('Sesión mezclada')});
-$('btnAdd').addEventListener('click',()=>{const en=$('inputEn').value.trim(),es=$('inputEs').value.trim();if(!en||!es)return toast('Falta inglés o español');cards.push(baseCard(en,es,$('inputEx').value.trim(),$('inputExEs').value.trim()));['inputEn','inputEs','inputEx','inputExEs'].forEach(id=>$(id).value='');persistNow();buildQueue();renderAll();showNext();toast('Palabra añadida')});
+$('btnAdd').addEventListener('click',()=>{const en=$('inputEn').value.trim(),es=$('inputEs').value.trim();if(!en||!es)return toast('Falta inglés o español');cards.push(baseCard(en,es,$('inputEx').value.trim(),$('inputExEs').value.trim(),$('inputPron').value.trim()));['inputEn','inputEs','inputPron','inputEx','inputExEs'].forEach(id=>$(id).value='');persistNow();buildQueue();renderAll();showNext();toast('Palabra añadida')});
 function renderList(){const el=$('wordList');el.innerHTML='';if(!cards.length){el.innerHTML='<div class="empty">todavía no hay palabras</div>';return}cards.slice().sort((a,b)=>a.en.localeCompare(b.en)).forEach(c=>{const row=document.createElement('div');row.className='list-item';const hist=c.history.slice(-5);row.innerHTML=`<div class="li-words"><b>${escapeHtml(c.en)}</b><span class="li-es">— ${escapeHtml(c.es)}</span><div class="li-meta">${c.attempts||0} intentos · ${mastery(c)}% dominio · ${c.rounds||0} vueltas</div></div><div class="li-right"><span class="dots">${hist.map(m=>`<i class="dot ${m}"></i>`).join('')}</span><button class="li-del">×</button></div>`;row.querySelector('.li-del').addEventListener('click',()=>{cards=cards.filter(x=>x.id!==c.id);persistNow();buildQueue();renderAll();showNext()});el.appendChild(row)})}
 function renderStats(){const box=$('statsBox');if(!cards.length){box.innerHTML='<div class="empty">sin datos</div>';return}const totalA=cards.reduce((s,c)=>s+(c.attempts||0),0),totalK=cards.reduce((s,c)=>s+(c.totalKnown||0),0);const acc=totalA?Math.round(totalK/totalA*100):0;const due=cards.filter(c=>(c.dueAt||0)<=Date.now()).length;const weak=cards.filter(c=>c.attempts>=2&&mastery(c)<55).length;const typingReady=cards.filter(c=>c.attempts>=3&&mastery(c)>=55&&mastery(c)<88).length;let recommendation=due?`Tienes <b>${due}</b> palabras listas para repasar ahora.`:weak?`No hay repasos vencidos. Conviene reforzar tus <b>${weak}</b> palabras más débiles.`:`Vas bien. Puedes hacer una sesión corta para mantenerlas frescas.`;const scored=cards.filter(c=>c.attempts>0).slice().sort((a,b)=>mastery(a)-mastery(b)).slice(0,5);let html=`<div class="statHero"><div class="heroBox"><div class="heroBig">${totalA?acc+'%':'—'}</div><div class="heroLabel">precisión histórica · ${totalA} intentos</div></div><div class="heroBox"><div class="recommend">${recommendation}</div></div></div><div class="sectionTitle">estado actual</div><div class="statRow"><div>Por repasar ahora</div><div></div><div class="pct">${due}</div></div><div class="statRow"><div>Débiles (&lt;55%)</div><div></div><div class="pct">${weak}</div></div><div class="statRow"><div>Listas para escribir</div><div></div><div class="pct">${typingReady}</div></div>`;if(scored.length){html+=`<div class="sectionTitle">tus 5 palabras más flojas</div>`+scored.map(c=>`<div class="statRow"><div class="wordName">${escapeHtml(c.en)} <span style="color:var(--muted)">· ${c.attempts} intentos</span></div><div class="miniBar"><i style="width:${mastery(c)}%"></i></div><div class="pct">${mastery(c)}%</div></div>`).join('')}html+=`<div class="sectionTitle">actividad · últimos 7 días</div><div class="week">`;const days=[];for(let i=6;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);const key=todayKey(d);let n=0;cards.forEach(c=>n+=(c.dayStats?.[key]?.attempts||0));days.push({d,n})}const mx=Math.max(1,...days.map(x=>x.n));html+=days.map(x=>`<div class="day"><div class="daybar" style="height:${Math.max(3,Math.round(x.n/mx*58))}px;opacity:${x.n?'.9':'.2'}"></div><div class="daylabel">${x.d.toLocaleDateString('es-PE',{weekday:'short'}).slice(0,2)}</div></div>`).join('')+`</div>`;box.innerHTML=html}
 function renderAll(){updateHeader();renderList();renderStats()}
 function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._x);t._x=setTimeout(()=>t.classList.remove('show'),1500)}
 load();
+
+/* ===== INGLÉS SEBAS v2 · translator + Buddy ===== */
+const AI_API = localStorage.getItem('ingles-sebas-api') || 'https://ingles-sebas-saez1205.vercel.app/api/ai';
+const CHAT_KEY='ingles-sebas-buddy-chat-v1';
+const MEMORY_KEY='ingles-sebas-buddy-memory-v1';
+let currentTranslation=null;
+let speechTargetId=null;
+let chatBusy=false;
+let chatHistory=[];
+try{chatHistory=JSON.parse(localStorage.getItem(CHAT_KEY)||'[]');if(!Array.isArray(chatHistory))chatHistory=[]}catch{chatHistory=[]}
+
+function switchView(name){
+  document.querySelectorAll('.appView').forEach(v=>v.classList.toggle('active',v.id===name+'View'));
+  document.querySelectorAll('.navBtn').forEach(b=>b.classList.toggle('active',b.dataset.view===name));
+  if(name==='stats')renderStats();
+  if(name==='chat')renderChat();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+async function callAI(payload){
+  const controller=new AbortController();
+  const timeout=setTimeout(()=>controller.abort(),35000);
+  try{
+    const r=await fetch(AI_API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),signal:controller.signal});
+    const data=await r.json().catch(()=>({}));
+    if(!r.ok)throw new Error(data.error||('Error '+r.status));
+    return data;
+  }finally{clearTimeout(timeout)}
+}
+
+function speakText(text){
+  if(!text)return;
+  if(!('speechSynthesis' in window))return toast('Audio no disponible');
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);u.lang='en-US';u.rate=.82;u.pitch=1;
+  const voices=speechSynthesis.getVoices?.()||[];const v=voices.find(v=>/^en(-|_)/i.test(v.lang));if(v)u.voice=v;
+  speechSynthesis.speak(u);
+}
+
+function startMic(targetId,lang){
+  speechTargetId=targetId;
+  if(window.AndroidNative&&typeof window.AndroidNative.startSpeech==='function'){window.AndroidNative.startSpeech(lang||'en-US');return}
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR)return toast('El reconocimiento de voz no está disponible');
+  const r=new SR();r.lang=lang||'en-US';r.interimResults=false;r.maxAlternatives=1;
+  r.onresult=e=>window.__receiveSpeechText(e.results?.[0]?.[0]?.transcript||'');
+  r.onerror=()=>toast('No pude escuchar bien');
+  r.start();
+}
+window.__receiveSpeechText=function(text){
+  const el=speechTargetId&&$(speechTargetId);if(!el)return;
+  el.value=String(text||'');el.dispatchEvent(new Event('input',{bubbles:true}));el.focus();speechTargetId=null;
+};
+
+async function doTranslate(){
+  const text=$('translateInput').value.trim();if(!text)return toast('Escribe o di algo primero');
+  $('translateStatus').innerHTML='<span class="loadingDots">pensando</span>';$('translateBtn').disabled=true;
+  try{
+    const data=await callAI({mode:'translate',text,profile:learningProfile()});
+    currentTranslation=data;
+    $('trEnglish').textContent=data.english||'';
+    $('trPron').textContent=data.pronunciation||'';
+    $('trSpanish').textContent=data.spanish||'';
+    $('trTone').textContent=data.tone||'neutral';
+    $('trNote').textContent=data.note||'';
+    const kw=$('trKeywords');kw.innerHTML='';
+    (data.keywords||[]).forEach((w,i)=>{
+      const b=document.createElement('button');b.className='keyword';
+      b.innerHTML='<b>'+escapeHtml(w.en||'')+'</b><small>'+escapeHtml(w.es||'')+' · + guardar</small>';
+      b.addEventListener('click',()=>{saveWordFromAI(w);b.textContent='✓ guardado'});
+      kw.appendChild(b);
+    });
+    $('translateResult').classList.add('show');$('translateStatus').textContent='listo';
+  }catch(e){$('translateStatus').textContent=e.name==='AbortError'?'La IA tardó demasiado. Intenta otra vez.':e.message;toast('No pude traducir todavía')}
+  finally{$('translateBtn').disabled=false}
+}
+function saveWordFromAI(w){
+  if(!w?.en||!w?.es)return;
+  const exists=cards.some(c=>normalizeText(c.en)===normalizeText(w.en));
+  if(exists)return toast('Ya tienes esa palabra');
+  cards.push(baseCard(String(w.en),String(w.es),'','',String(w.pronunciation||'')));persistNow();buildQueue();renderAll();toast('Guardado en tus palabras');
+}
+function saveCurrentTranslation(){
+  if(!currentTranslation?.english)return;
+  const exists=cards.some(c=>normalizeText(c.en)===normalizeText(currentTranslation.english));
+  if(exists)return toast('Esa frase ya está guardada');
+  cards.push(baseCard(currentTranslation.english,currentTranslation.spanish,'','',currentTranslation.pronunciation||''));
+  persistNow();buildQueue();renderAll();toast('Frase guardada para repasar');
+}
+
+async function autoFillWord(){
+  const text=$('inputEn').value.trim()||$('inputEs').value.trim();if(!text)return toast('Escribe una palabra primero');
+  $('btnAutoFill').disabled=true;$('btnAutoFill').textContent='pensando…';
+  try{
+    const x=await callAI({mode:'enrich',text});
+    $('inputEn').value=x.en||$('inputEn').value;$('inputEs').value=x.es||$('inputEs').value;
+    $('inputPron').value=x.pronunciation||'';$('inputEx').value=x.example||'';$('inputExEs').value=x.exampleEs||'';
+    toast('Listo · revisa y añade');
+  }catch(e){toast(e.message||'No pude completar')}
+  finally{$('btnAutoFill').disabled=false;$('btnAutoFill').textContent='✨ completar con IA'}
+}
+
+function learningProfile(){
+  const totalA=cards.reduce((n,c)=>n+(c.attempts||0),0),known=cards.reduce((n,c)=>n+(c.totalKnown||0),0);
+  const mastered=cards.filter(c=>c.attempts>=3&&mastery(c)>=85).length;
+  const weak=cards.filter(c=>c.attempts>=2&&mastery(c)<55).length;
+  const vocab=cards.slice().sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0)).slice(0,35).map(c=>({en:c.en,es:c.es,mastery:mastery(c)}));
+  return {memory:localStorage.getItem(MEMORY_KEY)||'',vocab,stats:{words:cards.length,attempts:totalA,accuracy:totalA?Math.round(known/totalA*100):0,mastered,weak,levelHint:'A2-B1'}};
+}
+
+function saveChat(){localStorage.setItem(CHAT_KEY,JSON.stringify(chatHistory.slice(-50)))}
+function renderChat(){
+  const box=$('chatMessages');if(!box)return;box.innerHTML='';
+  if(!chatHistory.length){
+    box.innerHTML='<div class="emptyBuddy"><b>Hey 👋 I\'m Buddy.</b><br>Tell me about your day, university, random drama, whatever. I\'ll keep it in English and help without turning the chat into a class.</div>';
+  }else{
+    chatHistory.forEach((m,idx)=>{
+      const div=document.createElement('div');div.className='msg '+(m.role==='user'?'user':'assistant');
+      div.innerHTML='<div class="msgMeta">'+(m.role==='user'?'you':'buddy')+'</div><div>'+escapeHtml(m.text||'').replace(/\n/g,'<br>')+'</div>';
+      if(m.correction){
+        const c=document.createElement('div');c.className='correction';
+        c.innerHTML='<b>✨ Mejor:</b> '+escapeHtml(m.correction.corrected||'')+'<br>'+escapeHtml(m.correction.explanation||'');
+        div.appendChild(c);
+      }
+      if(Array.isArray(m.newWords)&&m.newWords.length){
+        const wrap=document.createElement('div');
+        m.newWords.forEach(w=>{const b=document.createElement('button');b.className='wordChip';b.textContent='+ '+(w.en||'');b.title=w.es||'';b.addEventListener('click',()=>saveWordFromAI(w));wrap.appendChild(b)});
+        div.appendChild(wrap);
+      }
+      if(m.role==='assistant'){
+        const b=document.createElement('button');b.className='wordChip';b.textContent='🔊 escuchar';b.addEventListener('click',()=>speakText(m.text));div.appendChild(b);
+      }
+      box.appendChild(div);
+    });
+  }
+  box.scrollTop=box.scrollHeight;
+  const mem=localStorage.getItem(MEMORY_KEY)||'';
+  $('buddyMemoryPill').textContent=mem?'memoria activa':'memoria local';
+}
+async function sendChat(){
+  if(chatBusy)return;
+  const text=$('chatInput').value.trim();if(!text)return;
+  chatHistory.push({role:'user',text});$('chatInput').value='';saveChat();renderChat();chatBusy=true;
+  $('chatStatus').innerHTML='<span class="loadingDots">Buddy está escribiendo</span>';$('chatSend').disabled=true;
+  try{
+    const data=await callAI({mode:'chat',text,history:chatHistory.slice(0,-1),profile:learningProfile()});
+    chatHistory.push({role:'assistant',text:data.reply||'Tell me more.',correction:data.correction||null,newWords:data.newWords||[]});
+    if(typeof data.memory==='string')localStorage.setItem(MEMORY_KEY,data.memory.slice(0,1200));
+    saveChat();renderChat();$('chatStatus').textContent='';
+  }catch(e){chatHistory.push({role:'assistant',text:'I could not connect right now. Try me again in a moment.'});saveChat();renderChat();$('chatStatus').textContent=e.message}
+  finally{chatBusy=false;$('chatSend').disabled=false}
+}
+
+function activityFor(key){let n=0;cards.forEach(c=>n+=(c.dayStats?.[key]?.attempts||0));return n}
+function calcStudyStreak(){
+  let streak=0;for(let i=0;i<365;i++){const d=new Date();d.setDate(d.getDate()-i);if(activityFor(todayKey(d))>0)streak++;else if(i===0)continue;else break}return streak
+}
+// Override the original stats renderer with a fuller, useful version.
+function renderStats(){
+  const targets=[$('statsBox'),$('statsFullBox')].filter(Boolean);if(!targets.length)return;
+  if(!cards.length){targets.forEach(x=>x.innerHTML='<div class="empty">sin datos</div>');return}
+  const totalA=cards.reduce((s,c)=>s+(c.attempts||0),0),totalK=cards.reduce((s,c)=>s+(c.totalKnown||0),0);
+  const acc=totalA?Math.round(totalK/totalA*100):0,due=cards.filter(c=>(c.dueAt||0)<=Date.now()).length;
+  const mastered=cards.filter(c=>c.attempts>=3&&mastery(c)>=85).length;
+  const learning=cards.filter(c=>c.attempts>0&&mastery(c)>=55&&mastery(c)<85).length;
+  const weak=cards.filter(c=>c.attempts>=2&&mastery(c)<55).length;
+  const fresh=cards.filter(c=>!c.attempts).length,streak=calcStudyStreak();
+  const scored=cards.filter(c=>c.attempts>0).slice().sort((a,b)=>mastery(a)-mastery(b)).slice(0,7);
+  const days=[];for(let i=6;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);days.push({d,n:activityFor(todayKey(d))})}
+  const mx=Math.max(1,...days.map(x=>x.n));
+  const recommendation=due?('Haz primero tus <b>'+due+'</b> repasos pendientes.'):weak?('Refuerza estas <b>'+weak+'</b> palabras débiles antes de meter muchas nuevas.'):('Buen ritmo. Puedes sumar vocabulario nuevo y mantener una sesión corta.');
+  let html='<div class="statCards">'+
+    '<div class="bigStat"><strong>'+cards.length+'</strong><span>palabras/frases</span></div>'+
+    '<div class="bigStat"><strong>'+(totalA?acc+'%':'—')+'</strong><span>precisión</span></div>'+
+    '<div class="bigStat"><strong>'+mastered+'</strong><span>dominadas ≥85%</span></div>'+
+    '<div class="bigStat"><strong>'+streak+'</strong><span>racha de estudio</span></div></div>'+
+    '<div class="heroBox"><div class="recommend">'+recommendation+'</div></div>'+
+    '<div class="sectionTitle">mapa de aprendizaje</div>'+
+    '<div class="statRow"><div>Por repasar ahora</div><div></div><div class="pct">'+due+'</div></div>'+
+    '<div class="statRow"><div>Dominadas</div><div></div><div class="pct">'+mastered+'</div></div>'+
+    '<div class="statRow"><div>En progreso</div><div></div><div class="pct">'+learning+'</div></div>'+
+    '<div class="statRow"><div>Débiles</div><div></div><div class="pct">'+weak+'</div></div>'+
+    '<div class="statRow"><div>Nuevas</div><div></div><div class="pct">'+fresh+'</div></div>';
+  if(scored.length)html+='<div class="sectionTitle">prioridad de repaso</div>'+scored.map(c=>'<div class="statRow"><div class="wordName">'+escapeHtml(c.en)+' <span style="color:var(--muted)">· '+c.attempts+' intentos</span></div><div class="miniBar"><i style="width:'+mastery(c)+'%"></i></div><div class="pct">'+mastery(c)+'%</div></div>').join('');
+  html+='<div class="sectionTitle">actividad · últimos 7 días</div><div class="week">'+days.map(x=>'<div class="day"><div class="daybar" style="height:'+Math.max(3,Math.round(x.n/mx*76))+'px;opacity:'+(x.n?'.95':'.18')+'"></div><div class="daylabel">'+x.d.toLocaleDateString('es-PE',{weekday:'short'}).slice(0,2)+'</div></div>').join('')+'</div>';
+  targets.forEach(x=>x.innerHTML=html);
+}
+
+function initV2(){
+  document.querySelectorAll('.navBtn').forEach(b=>b.addEventListener('click',()=>switchView(b.dataset.view)));
+  $('translateBtn').addEventListener('click',doTranslate);$('translateMic').addEventListener('click',()=>startMic('translateInput','es-PE'));
+  $('trSpeak').addEventListener('click',()=>speakText(currentTranslation?.english||''));$('trSave').addEventListener('click',saveCurrentTranslation);
+  $('btnAutoFill').addEventListener('click',autoFillWord);
+  $('chatSend').addEventListener('click',sendChat);$('chatMic').addEventListener('click',()=>startMic('chatInput','en-US'));
+  $('chatInput').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat()}});
+  $('btnClearChat').addEventListener('click',()=>{chatHistory=[];saveChat();renderChat();toast('Chat limpio · Buddy mantiene su memoria')});
+  $('btnForgetMemory').addEventListener('click',()=>{localStorage.removeItem(MEMORY_KEY);renderChat();toast('Memoria de Buddy reiniciada')});
+  renderChat();renderStats();
+}
+
+initV2();
 </script>
 </body>
 </html>
